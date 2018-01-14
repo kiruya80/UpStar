@@ -17,6 +17,7 @@ import com.ulling.upstar.view.dummy.DummyContent.DummyItem;
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
+ * content_main
  */
 public class MarketPriceFragment extends QcBaseLifeFragment {
 
@@ -40,7 +41,6 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needInitToOnCreate() {
-
     }
 
     @Override
@@ -67,11 +67,12 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
     protected void needUIBinding() {
         viewBinding = (FragmentMarketPriceBinding) getViewDataBinding();
         if (mColumnCount <= 1) {
-            viewBinding.list.setLayoutManager(new LinearLayoutManager(qCon));
+            viewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(qCon));
         } else {
-            viewBinding.list.setLayoutManager(new GridLayoutManager(qCon, mColumnCount));
+            viewBinding.recyclerView.setLayoutManager(new GridLayoutManager(qCon, mColumnCount));
         }
-        viewBinding.list.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+        viewBinding.recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
 
     }
 
@@ -90,16 +91,7 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);

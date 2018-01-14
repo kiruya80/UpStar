@@ -77,14 +77,6 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         setSupportActionBar(viewBinding.includedAppBarMain.toolbar);
 
-//        viewBinding.includedAppBarMain.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         viewBinding.drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, viewBinding.drawerLayout, viewBinding.includedAppBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -95,38 +87,13 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         QcActivityUtils.replaceFragment(getSupportFragmentManager(),
                 DrawerMenuFragment.getInstance(viewBinding.drawerLayout),
-                R.id.frame_drawer,
+                R.id.frameDrawer,
                 DrawerMenuFragment.class.getSimpleName());
 
         setFragment(FRAG_TYPE_MARKET_PRICE);
 
     }
 
-
-    private void setFragment(int type) {
-        if (type == FRAG_TYPE_MARKET_PRICE) {
-            QcActivityUtils.replaceFragment(
-                    getSupportFragmentManager(),
-                    marketPriceFragment,
-                    R.id.lay_frame,
-                    marketPriceFragment.getFragmentTag());
-
-        } else if (type == FRAG_TYPE_TALK) {
-            QcActivityUtils.replaceFragment(
-                    getSupportFragmentManager(),
-                    talkFragment,
-                    R.id.lay_frame,
-                    talkFragment.getFragmentTag());
-
-        } else if (type == FRAG_TYPE_COIN_CALCULATOR) {
-            QcActivityUtils.replaceFragment(
-                    getSupportFragmentManager(),
-                    coinCalculatorFragment,
-                    R.id.lay_frame,
-                    coinCalculatorFragment.getFragmentTag());
-
-        }
-    }
     @Override
     protected void needUIEventListener() {
 
@@ -172,28 +139,33 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         return super.onOptionsItemSelected(item);
     }
 
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.nav_menu_market_price) {
-//            QcToast.getInstance().show("nav_menu_market_price", false);
-//            setFragment(FRAG_TYPE_MARKET_PRICE);
-//
-//        } else if (id == R.id.nav_menu_talk) {
-//            QcToast.getInstance().show("nav_menu_talk", false);
-//            setFragment(FRAG_TYPE_TALK);
-//
-//
-//        } else if (id == R.id.nav_menu_coin_calculator) {
-//            QcToast.getInstance().show("nav_menu_coin_calculator", false);
-//            setFragment(FRAG_TYPE_COIN_CALCULATOR);
-//
-//        }
-//
-//        viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
 
+    /**
+     * 프레그먼트 화면 설정
+     * @param type
+     */
+    private void setFragment(int type) {
+        if (type == FRAG_TYPE_MARKET_PRICE) {
+            QcActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    marketPriceFragment,
+                    R.id.frameContainer,
+                    marketPriceFragment.getFragmentTag());
+
+        } else if (type == FRAG_TYPE_TALK) {
+            QcActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    talkFragment,
+                    R.id.frameContainer,
+                    talkFragment.getFragmentTag());
+
+        } else if (type == FRAG_TYPE_COIN_CALCULATOR) {
+            QcActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    coinCalculatorFragment,
+                    R.id.frameContainer,
+                    coinCalculatorFragment.getFragmentTag());
+        }
+    }
 
 }

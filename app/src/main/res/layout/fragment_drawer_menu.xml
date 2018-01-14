@@ -44,12 +44,11 @@
 
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_menu"
-            android:name="com.ulling.upstar.view.MarketPriceFragment"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
-            tools:context="com.ulling.upstar.view.MarketPriceFragment"
+            tools:context="com.ulling.upstar.view.DrawerMenuFragment"
             tools:listitem="@layout/item_market_price" />
     </LinearLayout>
 </layout>
