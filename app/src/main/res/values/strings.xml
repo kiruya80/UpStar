@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">UpStar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string name="drawer_menu_market_price">코인 시세</string>
+    <string name="drawer_menu_talk">채팅방</string>
+    <string name="drawer_menu_coin_calculator">자산조회</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
