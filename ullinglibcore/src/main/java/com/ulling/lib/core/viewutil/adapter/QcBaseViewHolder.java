@@ -12,17 +12,14 @@ import android.view.View;
  * @description :
  * @since :
  */
-public class QcBaseViewHolder extends RecyclerView.ViewHolder  {
+public abstract class QcBaseViewHolder extends RecyclerView.ViewHolder  {
 //        implements OnSingleClickListener.OnSingleClick  {
-    private final ViewDataBinding binding;
-
+    private   ViewDataBinding binding;
+    public View itemView;
     public QcBaseViewHolder(View itemView) {
         super(itemView);
+        this.itemView = itemView;
         this.binding = DataBindingUtil.bind(itemView);
-    }
-
-    public ViewDataBinding getBinding() {
-        return binding;
     }
 
     public QcBaseViewHolder(ViewDataBinding binding) {
@@ -35,8 +32,12 @@ public class QcBaseViewHolder extends RecyclerView.ViewHolder  {
 //        binding.executePendingBindings();
     }
 
+    public ViewDataBinding getBinding() {
+        return binding;
+    }
 
-//    @Override
+
+    //    @Override
 //    public void onSingleClick(View view) {
 //    }
 

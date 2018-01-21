@@ -1,4 +1,4 @@
-package base;
+package com.ulling.upstar.base;
 
 import android.content.Context;
 

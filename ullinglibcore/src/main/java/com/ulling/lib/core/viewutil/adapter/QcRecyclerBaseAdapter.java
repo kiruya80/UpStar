@@ -20,12 +20,12 @@ import java.util.List;
 
 /**
  * Created by P100651 on 2017-07-20.
- *
+ * <p>
  * https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/src/main/java/com/example/android/persistence/ui/ProductAdapter.java
- *
- *
+ * <p>
+ * <p>
  * 해결 및 최적화가 가능한지 체크 리스트
- *
+ * <p>
  * 1. 공통으로 사용할 수 있는 데이터 리스트? 2. 데이터 모델이 필요할까
  */
 public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBaseViewHolder> {
@@ -34,7 +34,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     public static final int TYPE_LOAD_PROGRESS = 999;
 
     public Context qCon;
-    public QcBaseLifeFragment qFragment;
+//    public QcBaseLifeFragment qFragment;
     private AndroidViewModel viewModel;
     public QcRecyclerItemListener qcRecyclerItemListener;
     /**
@@ -70,13 +70,58 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
      * 1-2.
      * 리셋할 데이터 정의
      */
-    protected abstract void needResetData();
+    public abstract void needResetData();
 
     /**
      * 2.
      * 뷰모델 설정
      */
     public abstract void setViewModel(AndroidViewModel viewModel);
+
+
+    /**
+     * 3.
+     * <p>
+     * View Type 결정
+     */
+    protected abstract int needLayoutIdFromItemViewType(int viewType);
+
+    /**
+     * 4.
+     * onCreateViewHolder 에서 뷰홉더 생성하기
+     * @param viewType
+     * @param binding
+     * @return
+     */
+    protected abstract QcBaseViewHolder needViewHolderFromItemViewType(int viewType, ViewDataBinding binding);
+
+    /**
+     * 실패시
+     *
+     * @param holder
+     * @param position
+     * @param item
+     */
+    protected abstract void needUILoadFailBinding(QcBaseViewHolder holder, int position, QcBaseItem item);
+
+    /**
+     * 프로그레스
+     *
+     * @param holder
+     * @param position
+     * @param item
+     */
+    protected abstract void needUILoadProgressBinding(QcBaseViewHolder holder, int position, QcBaseItem item);
+
+    /**
+     * 커스텀뷰바인딩
+     *
+     * @param viewType
+     * @param holder
+     * @param position
+     * @param item
+     */
+    protected abstract void needUICustomBinding(int viewType, QcBaseViewHolder holder, final int position, QcBaseItem item);
 
     public boolean isViewModel() {
         if (viewModel == null) {
@@ -90,45 +135,6 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         return viewModel;
     }
 
-    /**
-     * 2.
-     * <p>
-     * View Type 결정
-     */
-    protected abstract int needLayoutIdFromItemViewType(int position);
-
-    /**
-     * 3.
-     * <p>
-     * 포기션에 맞는 아이템 가져오기
-     */
-//    protected abstract Object needItemFromPosition(int position);
-//    protected abstract void needAddData(LiveData<List<Class>> data);
-
-    /**
-     * 5.
-     * <p>
-     * 접근한 View에 이벤트에 따른 동작 설정
-     * 버튼 및 기타 UI이벤트 설정
-     */
-    protected abstract void needUIEventListener(int viewTypeResId, ViewDataBinding binding);
-
-    /**
-     * 4.
-     * <p>
-     * UI에서 필요한 데이터 바인딩
-     * View객체에 접근하여 데이터 연결한다.
-     */
-    protected abstract void needUIBinding(QcBaseViewHolder holder, int position, Object object);
-
-
-    /**
-     * 6.
-     *
-     * 리스너 달기
-     * @param qcRecyclerItemListener
-     */
-//    protected abstract void setEventListener(QcRecyclerItemListener qcRecyclerItemListener);
     /**
      * 옵션
      * opt
@@ -147,6 +153,102 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
      */
     protected void optAnimationPause() {
     }
+
+
+    /**
+     * 아답터 시작
+     */
+    public QcRecyclerBaseAdapter(Context qCon, QcRecyclerItemListener qcRecyclerItemListener) {
+        super();
+        this.qCon = qCon;
+        this.qcRecyclerItemListener = qcRecyclerItemListener;
+        needInitToOnCreate();
+        needResetData();
+    }
+
+    /**
+     * 1. 뷰모델 가져오기
+     * 2. 이벤트 리스너 달기
+     */
+    @Override
+    public QcBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        QcLog.i("onCreateViewHolder == ");
+
+        int viewTypeResId = needLayoutIdFromItemViewType(viewType);
+        if (viewTypeResId != 0) {
+            LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+            ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewTypeResId, viewGroup, false);
+
+//            return new QcBaseViewHolder(binding);
+            return needViewHolderFromItemViewType(viewType, binding);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param holder
+     * @param position
+     */
+    @Override
+    public void onBindViewHolder(QcBaseViewHolder holder, int position) {
+        QcLog.i("onBindViewHolder == ");
+        if (holder == null) {
+            return;
+        }
+        if (position < 0) {
+            return;
+        }
+        Object object = getItem(position);
+        if (object == null) {
+            return;
+        }
+        if (object instanceof QcBaseItem ) {
+            QcBaseItem item = (QcBaseItem) object;
+            if (item.getType() == TYPE_LOAD_FAIL) {
+                QcLog.i("TYPE_LOAD_FAIL =====" + position);
+                needUILoadFailBinding(holder, position, item);
+            } else if (item.getType() == TYPE_LOAD_PROGRESS) {
+                QcLog.i("TYPE_LOAD_PROGRESS =====" + position);
+                needUILoadProgressBinding(holder, position, item);
+            } else {
+                QcLog.i("TYPE_OTHER =====" + position);
+                needUICustomBinding(item.getType(), holder, position, item);
+            }
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemList == null ? 0 : itemList.size();
+    }
+
+    protected T getItem(int position) {
+        if (itemList != null && itemList.size() >= position) {
+            return itemList.get(position);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position) == null ? 0 : ((QcBaseItem) getItem(position)).getType();
+    }
+
+//    public T getItem(int position) {
+//        return itemList == null ? 0 : ((QcBaseItem) getItem(position)).getType();
+//        if (itemList != null) {
+//            return itemList.get(position);
+//        } else {
+//            return null;
+//        }
+//    }
+
 
     /**
      * 아이템을 하나씩 추가
@@ -204,6 +306,10 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         notifyDataSetChanged();
     }
 
+    /**
+     * 같은거는 제외하고 추가
+     * @param itemList_
+     */
     public void addListDiffResult(final List<T> itemList_) {
         if (itemList == null) {
             this.itemList = itemList_;
@@ -257,10 +363,11 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         }
         if (this.itemList != null) {
             QcLog.e("remove == ");
-             this.itemList.remove(item_);
+            this.itemList.remove(item_);
             notifyItemChanged(itemList.size(), 0);
         }
     }
+
     public void addProgress(T item_) {
         QcLog.e("addProgress =====");
         if (getItemCount() == 0) {
@@ -277,7 +384,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
             return false;
 
         QcLog.e("removeProgress == " + itemList.size());
-        for (int i=itemList.size()-1; i>=0; i--) {
+        for (int i = itemList.size() - 1; i >= 0; i--) {
             QcBaseItem mQcBaseItem = (QcBaseItem) itemList.get(i);
             if (mQcBaseItem.getType() == TYPE_LOAD_PROGRESS) {
                 itemList.remove(i);
@@ -298,7 +405,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         if (getItemCount() == 0)
             return false;
 
-        for (int i=itemList.size()-1; i>=0; i--) {
+        for (int i = itemList.size() - 1; i >= 0; i--) {
             QcBaseItem mQcBaseItem = (QcBaseItem) itemList.get(i);
             if (mQcBaseItem.getType() == TYPE_LOAD_PROGRESS) {
                 return true;
@@ -314,7 +421,6 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     }
 
     /**
-     *
      * @param item_
      */
     public void addLoadFail(T item_) {
@@ -333,7 +439,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
 
         QcLog.e("removeLoadFail == ");
 
-        for (int i=itemList.size()-1; i>=0; i--) {
+        for (int i = itemList.size() - 1; i >= 0; i--) {
             QcBaseItem mQcBaseItem = (QcBaseItem) itemList.get(i);
             if (mQcBaseItem.getType() == TYPE_LOAD_FAIL) {
                 itemList.remove(i);
@@ -354,7 +460,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         if (getItemCount() == 0)
             return false;
 
-        for (int i=itemList.size()-1; i>=0; i--) {
+        for (int i = itemList.size() - 1; i >= 0; i--) {
             QcBaseItem mQcBaseItem = (QcBaseItem) itemList.get(i);
             if (mQcBaseItem.getType() == TYPE_LOAD_FAIL) {
                 return true;
@@ -371,100 +477,4 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     }
 
 
-    /**
-     * 아답터 시작
-     */
-    public QcRecyclerBaseAdapter(QcBaseLifeFragment qFragment) {
-        super();
-        this.qFragment = qFragment;
-        this.qCon = qFragment.getContext();
-        needInitToOnCreate();
-        needResetData();
-    }
-
-    public QcRecyclerBaseAdapter(QcBaseLifeFragment qFragment, QcRecyclerItemListener qcRecyclerItemListener) {
-        super();
-        this.qFragment = qFragment;
-        this.qCon = qFragment.getContext();
-        this.qcRecyclerItemListener = qcRecyclerItemListener;
-        needInitToOnCreate();
-        needResetData();
-    }
-
-    /**
-     * 1. 뷰모델 가져오기
-     * 2. 이벤트 리스너 달기
-     */
-    @Override
-    public QcBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewTypeResId) {
-        QcLog.i("onCreateViewHolder == ");
-        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewTypeResId, viewGroup, false);
-
-        needUIEventListener(viewTypeResId, binding);
-        return new QcBaseViewHolder(binding);
-    }
-
-    protected Object needItemFromPosition(int position) {
-        if (itemList != null && itemList.size() >= position) {
-            return itemList.get(position);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
-    }
-
-    /**
-     * @param holder
-     * @param position
-     */
-    @Override
-    public void onBindViewHolder(QcBaseViewHolder holder, int position) {
-        QcLog.i("onBindViewHolder == ");
-        if (holder == null) {
-            return;
-        }
-        if (position < 0) {
-            return;
-        }
-        Object object = needItemFromPosition(position);
-        if (object == null) {
-            return;
-        }
-        if (object instanceof QcBaseItem) {
-            QcBaseItem item = (QcBaseItem) object;
-            if (item.getType() == TYPE_LOAD_FAIL) {
-                QcLog.i("TYPE_LOAD_FAIL =====" + position);
-                needUILoadFailBinding(holder, position, object);
-            } else if (item.getType() == TYPE_LOAD_PROGRESS) {
-                QcLog.i("TYPE_LOAD_PROGRESS =====" + position);
-                needUILoadProgressBinding(holder, position, object);
-            } else if (item.getType() == TYPE_DEFAULT) {
-                QcLog.i("TYPE_DEFAULT =====" + position);
-                needUIBinding(holder, position, object);
-            } else {
-                QcLog.i("TYPE_OTHER =====" + position);
-                needUIOtherBinding(holder, position, object);
-            }
-        }
-    }
-
-    protected abstract void needUILoadFailBinding(QcBaseViewHolder holder, int position, Object object);
-
-    protected abstract void needUILoadProgressBinding(QcBaseViewHolder holder, int position, Object object);
-
-    protected abstract void needUIOtherBinding(QcBaseViewHolder holder, int position, Object object);
-
-    /**
-     * @param position
-     * @return
-     */
-    @Override
-    public int getItemViewType(int position) {
-        return needLayoutIdFromItemViewType(position);
-    }
 }

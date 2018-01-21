@@ -1,7 +1,6 @@
-package com.ulling.upstar.view;
+package com.ulling.upstar.main.view;
 
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
@@ -10,8 +9,6 @@ import android.view.MenuItem;
 import com.ulling.lib.core.base.QcBaseLifeActivity;
 import com.ulling.lib.core.util.QcActivityUtils;
 import com.ulling.lib.core.util.QcBackPressClose;
-import com.ulling.lib.core.util.QcLog;
-import com.ulling.lib.core.util.QcToast;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.ActivityMainBinding;
 

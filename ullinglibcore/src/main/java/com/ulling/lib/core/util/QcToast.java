@@ -33,6 +33,10 @@ public class QcToast {
         QcLog.i("QcToast init Success !!");
     }
 
+    public void show(String toastStr) {
+        show(toastStr, false);
+    }
+
     public void show(String toastStr, boolean longDuration) {
         if (toastStr == null)
             return;

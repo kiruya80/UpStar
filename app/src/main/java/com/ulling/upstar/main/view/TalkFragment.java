@@ -1,18 +1,20 @@
-package com.ulling.upstar.view;
+package com.ulling.upstar.main.view;
 
 import android.os.Bundle;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.upstar.R;
 
-public class NavigationFragment extends QcBaseLifeFragment {
+public class TalkFragment extends QcBaseLifeFragment {
 
-    public NavigationFragment() {
+    public TalkFragment() {
     }
 
-    public static NavigationFragment getInstance() {
-        NavigationFragment fragment = new NavigationFragment();
+    public static TalkFragment getInstance() {
+        TalkFragment fragment = new TalkFragment();
         Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }

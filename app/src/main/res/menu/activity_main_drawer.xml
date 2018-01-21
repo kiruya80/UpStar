@@ -10,55 +10,41 @@
             <!--android:title="@string/drawer_menu_market_price" />-->
     <!--</group>-->
 
-    <item android:title="@string/drawer_menu_market_price">
+    <item android:title="@string/menu_market_price">
         <menu>
             <item
                 android:id="@+id/nav_menu_market_price"
                 android:icon="@drawable/ic_menu_camera"
-                android:title="@string/drawer_menu_market_price" />
+                android:title="@string/menu_market_price" />
         </menu>
     </item>
 
-    <item android:title="@string/drawer_menu_talk">
+    <item android:title="@string/menu_talk">
         <menu>
             <item
                 android:id="@+id/nav_menu_talk"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/drawer_menu_talk" />
+                android:title="@string/menu_talk" />
         </menu>
     </item>
 
 
-    <item android:title="@string/drawer_menu_coin_calculator">
+    <item android:title="@string/menu_coin_calculator">
         <menu>
             <item
                 android:id="@+id/nav_menu_coin_calculator"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
+                android:title="@string/menu_coin_calculator" />
             <item
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
+                android:title="@string/menu_coin_calculator" />
             <item
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
+                android:title="@string/menu_coin_calculator" />
             <item
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
-            <item
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
-            <item
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
-            <item
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
-            <item
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
-            <item
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/drawer_menu_coin_calculator" />
+                android:title="@string/menu_coin_calculator" />
+
         </menu>
     </item>
 
