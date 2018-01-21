@@ -2,8 +2,10 @@
 package com.ulling.upstar.main.view;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
@@ -23,7 +25,6 @@ import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN_SUB;
  *
  */
 public class MarketPriceFragment extends QcBaseLifeFragment {
-
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private FragmentMarketPriceBinding viewBinding;
@@ -33,6 +34,7 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
 
     public MarketPriceFragment() {
     }
+
     public static MarketPriceFragment getInstance(int columnCount) {
         MarketPriceFragment fragment = new MarketPriceFragment();
         Bundle args = new Bundle();
@@ -69,6 +71,13 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
     @Override
     protected void needUIBinding() {
         viewBinding = (FragmentMarketPriceBinding) getViewDataBinding();
+
+//        setToolbar(viewBinding.toolbar);
+//
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         if (mColumnCount <= 1) {
             viewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(qCon));
         } else {
@@ -76,9 +85,8 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
         }
         menuAdapter = new MenuAdapter(qCon, qcRecyclerItemListener);
         viewBinding.recyclerView.setAdapter(menuAdapter);
-
-
     }
+
 
     @Override
     protected void needUIEventListener() {

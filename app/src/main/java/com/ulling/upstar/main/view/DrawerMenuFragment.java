@@ -25,6 +25,15 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     private FragmentDrawerMenuBinding viewBinding;
     public List<Menu> menuItems = new ArrayList<Menu>();
     private MenuAdapter menuAdapter;
+    private OnMenuListener listener;
+
+    public void setListener(OnMenuListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnMenuListener  {
+        void onSelected(int main, int sub);
+    }
 
     public DrawerMenuFragment() {
     }
@@ -66,9 +75,8 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     protected void needUIBinding() {
         viewBinding = (FragmentDrawerMenuBinding) getViewDataBinding();
         viewBinding.recyclerView.setLayoutManager(new GridLayoutManager(qCon, 1));
-          menuAdapter = new MenuAdapter(qCon, qcRecyclerItemListener);
+        menuAdapter = new MenuAdapter(qCon, qcRecyclerItemListener);
         viewBinding.recyclerView.setAdapter(menuAdapter);
-
     }
 
     @Override
@@ -92,7 +100,25 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
         @Override
         public void onItemClick(View view, int position, Menu menu) {
             QcToast.getInstance().show("onItemClick == " + menu.toString());
-
+            if (listener != null) {
+                if (TYPE_MENU_MAIN == menu.getType()) {
+                    if (getResources().getString(R.string.menu_market_price).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, 0);
+                    } else if (getResources().getString(R.string.menu_talk).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_TALK, 0);
+                    } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, 0);
+                    }
+                } else if (TYPE_MENU_MAIN_SUB == menu.getType()) {
+                    if (getResources().getString(R.string.menu_market_price).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, 0);
+                    } else if (getResources().getString(R.string.menu_talk).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_TALK, 0);
+                    } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu.getName())) {
+                        listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, 0);
+                    }
+                }
+            }
         }
 
         @Override
@@ -117,15 +143,12 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     };
 
 
-
-
-
     public void resetMenuData() {
         // Add some sample items.
         String[] menu = getResources().getStringArray(R.array.menu);
 
         for (int i = 0; i < menu.length; i++) {
-            Menu mMenu = new Menu(TYPE_MENU_MAIN,  menu[i], null);
+            Menu mMenu = new Menu(TYPE_MENU_MAIN, menu[i], null);
             menuItems.add(mMenu);
 
 
@@ -133,33 +156,31 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                 String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
                 for (int j = 0; j < menu_market_price_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_market_price_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB,  menu[i],  menuSub);
+                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
                     menuItems.add(mMenu2);
 
                 }
 
-            } else  if (getResources().getString(R.string.menu_talk).equals(menu[i])) {
+            } else if (getResources().getString(R.string.menu_talk).equals(menu[i])) {
                 String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
                 for (int j = 0; j < menu_talk_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_talk_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB,  menu[i],  menuSub);
+                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
                     menuItems.add(mMenu2);
 
                 }
 
-            } else  if (getResources().getString(R.string.menu_coin_calculator).equals(menu[i])) {
+            } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu[i])) {
                 String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
                 for (int j = 0; j < menu_coin_calculator_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_coin_calculator_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB,  menu[i],  menuSub);
+                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
                     menuItems.add(mMenu2);
 
                 }
             }
         }
     }
-
-
 
 
 }

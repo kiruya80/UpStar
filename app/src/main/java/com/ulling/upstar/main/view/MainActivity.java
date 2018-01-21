@@ -1,14 +1,21 @@
 package com.ulling.upstar.main.view;
 
+import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ulling.lib.core.base.QcBaseLifeActivity;
 import com.ulling.lib.core.util.QcActivityUtils;
 import com.ulling.lib.core.util.QcBackPressClose;
+import com.ulling.lib.core.util.QcLog;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.ActivityMainBinding;
 
@@ -17,12 +24,16 @@ import com.ulling.upstar.databinding.ActivityMainBinding;
  */
 public class MainActivity extends QcBaseLifeActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public final int FRAG_TYPE_MARKET_PRICE = 1;
-    public final int FRAG_TYPE_TALK = 2;
-    public final int FRAG_TYPE_COIN_CALCULATOR = 3;
+    public static final int FRAG_TYPE_MARKET_PRICE = 1;
+    public static final int FRAG_TYPE_TALK = 2;
+    public static final int FRAG_TYPE_COIN_CALCULATOR = 3;
+
+    public static final int ACTIONBAR_SHORT = 0;
+    public static final int ACTIONBAR_LONG = 1;
 
     private ActivityMainBinding viewBinding;
 
+    private DrawerMenuFragment mDrawerMenuFragment;
     private MarketPriceFragment marketPriceFragment;
     private TalkFragment talkFragment;
     private CoinCalculatorFragment coinCalculatorFragment;
@@ -46,8 +57,6 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         marketPriceFragment = MarketPriceFragment.getInstance(1);
         talkFragment = TalkFragment.getInstance();
         coinCalculatorFragment = CoinCalculatorFragment.getInstance();
-
-
     }
 
     @Override
@@ -82,13 +91,38 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         viewBinding.navView.setNavigationItemSelectedListener(this);
 
+        mDrawerMenuFragment = DrawerMenuFragment.getInstance(viewBinding.drawerLayout);
+        mDrawerMenuFragment.setListener(new DrawerMenuFragment.OnMenuListener() {
+
+            @Override
+            public void onSelected(int type, int sub) {
+                if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
+                    viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                setFragment(type);
+            }
+        });
+
         QcActivityUtils.replaceFragment(getSupportFragmentManager(),
-                DrawerMenuFragment.getInstance(viewBinding.drawerLayout),
+                mDrawerMenuFragment,
                 R.id.frameDrawer,
                 DrawerMenuFragment.class.getSimpleName());
 
-        setFragment(FRAG_TYPE_MARKET_PRICE);
 
+        setFragment(FRAG_TYPE_MARKET_PRICE);
+    }
+
+    public void setToolBar(int type) {
+        if (type == ACTIONBAR_LONG) {
+            float heightDp = getResources().getDimension(R.dimen.p800);
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) viewBinding.includedAppBarMain.appBarLayout.getLayoutParams();
+            lp.height = (int) heightDp;
+            viewBinding.includedAppBarMain.imageCollapsingToolbar.setVisibility(View.VISIBLE);
+
+        } else {
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) viewBinding.includedAppBarMain.appBarLayout.getLayoutParams();
+            lp.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT;
+            viewBinding.includedAppBarMain.imageCollapsingToolbar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -107,9 +141,9 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-           if (QcBackPressClose.getInstance().isBackPress(qCon.getString(R.string.app_name))) {
-            super.onBackPressed();
-           }
+            if (QcBackPressClose.getInstance().isBackPress(qCon.getString(R.string.app_name))) {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -139,15 +173,18 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
     /**
      * 프레그먼트 화면 설정
+     *
      * @param type
      */
     private void setFragment(int type) {
+        QcLog.e("setFragment === " + type);
         if (type == FRAG_TYPE_MARKET_PRICE) {
             QcActivityUtils.replaceFragment(
                     getSupportFragmentManager(),
                     marketPriceFragment,
                     R.id.frameContainer,
                     marketPriceFragment.getFragmentTag());
+            setToolBar(ACTIONBAR_LONG);
 
         } else if (type == FRAG_TYPE_TALK) {
             QcActivityUtils.replaceFragment(
@@ -155,6 +192,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
                     talkFragment,
                     R.id.frameContainer,
                     talkFragment.getFragmentTag());
+            setToolBar(ACTIONBAR_SHORT);
 
         } else if (type == FRAG_TYPE_COIN_CALCULATOR) {
             QcActivityUtils.replaceFragment(
@@ -162,7 +200,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
                     coinCalculatorFragment,
                     R.id.frameContainer,
                     coinCalculatorFragment.getFragmentTag());
+            setToolBar(ACTIONBAR_SHORT);
         }
     }
-
 }
