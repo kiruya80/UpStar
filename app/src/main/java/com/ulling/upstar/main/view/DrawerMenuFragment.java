@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
+import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.util.QcToast;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
@@ -148,40 +149,35 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
         String[] menu = getResources().getStringArray(R.array.menu);
 
         for (int i = 0; i < menu.length; i++) {
-            Menu mMenu = new Menu(TYPE_MENU_MAIN, menu[i], null);
-            menuItems.add(mMenu);
 
+              List<Menu.SubMenu> subMenu = new ArrayList<Menu.SubMenu>();
 
             if (getResources().getString(R.string.menu_market_price).equals(menu[i])) {
                 String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
+
                 for (int j = 0; j < menu_market_price_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_market_price_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
-                    menuItems.add(mMenu2);
-
+                    subMenu.add(menuSub);
                 }
 
             } else if (getResources().getString(R.string.menu_talk).equals(menu[i])) {
                 String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
                 for (int j = 0; j < menu_talk_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_talk_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
-                    menuItems.add(mMenu2);
-
+                    subMenu.add(menuSub);
                 }
 
             } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu[i])) {
                 String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
                 for (int j = 0; j < menu_coin_calculator_sub.length; j++) {
                     Menu.SubMenu menuSub = new Menu.SubMenu(menu_coin_calculator_sub[j]);
-                    Menu mMenu2 = new Menu(TYPE_MENU_MAIN_SUB, menu[i], menuSub);
-                    menuItems.add(mMenu2);
-
+                    subMenu.add(menuSub);
                 }
             }
+            Menu mMenu = new Menu(TYPE_MENU_MAIN, menu[i], subMenu);
+            menuItems.add(mMenu);
         }
+        QcLog.e("menuItems == " + menuItems.size());
     }
-
-
 }
 

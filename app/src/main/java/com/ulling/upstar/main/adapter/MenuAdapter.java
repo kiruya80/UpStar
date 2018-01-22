@@ -1,5 +1,6 @@
 package com.ulling.upstar.main.adapter;
 
+import android.animation.ValueAnimator;
 import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
@@ -27,7 +28,10 @@ public class MenuAdapter extends QcRecyclerBaseAdapter<Menu> {
     public static final int TYPE_MENU_MAIN = 0;
     public static final int TYPE_MENU_MAIN_SUB = 1;
 
-//    public List<Menu> menuItems = new ArrayList<Menu>();
+    private static final float MAX_MARGIN = 16;
+    private static final float MIN_MARGIN = 2;
+
+    private ValueAnimator marginAnimator = ValueAnimator.ofFloat(MAX_MARGIN, MIN_MARGIN); // replace with dimens
 
     public MenuAdapter(Context qCon, QcRecyclerItemListener qcRecyclerItemListener) {
         super(qCon, qcRecyclerItemListener);
@@ -92,27 +96,34 @@ public class MenuAdapter extends QcRecyclerBaseAdapter<Menu> {
 
             menuViewHolder.item = (Menu) item;
             menuViewHolder.viewBinding.name.setText(menuViewHolder.item.getName());
-            menuViewHolder.viewBinding.root.setOnClickListener(new View.OnClickListener() {
+//            menuViewHolder.viewBinding.root.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (null != qcRecyclerItemListener) {
+//                        qcRecyclerItemListener.onItemClick(v, position, menuViewHolder.item);
+//                    }
+//                }
+//            });
+            menuViewHolder.viewBinding.btnExpened.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != qcRecyclerItemListener) {
-                        qcRecyclerItemListener.onItemClick(v, position, menuViewHolder.item);
-                    }
+
                 }
             });
+
         } else if (TYPE_MENU_MAIN_SUB == viewType && holder instanceof MenuSubViewHolder) {
             final MenuSubViewHolder menuSubViewHolder = (MenuSubViewHolder) holder;
 
-            menuSubViewHolder.item = (Menu) item;
-            menuSubViewHolder.viewBinding.name.setText(menuSubViewHolder.item.getSubMenu().getName());
-            menuSubViewHolder.viewBinding.root.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (null != qcRecyclerItemListener) {
-                        qcRecyclerItemListener.onItemClick(v, position, menuSubViewHolder.item);
-                    }
-                }
-            });
+//            menuSubViewHolder.item = (Menu) item;
+//            menuSubViewHolder.viewBinding.name.setText(menuSubViewHolder.item.getSubMenu().getName());
+//            menuSubViewHolder.viewBinding.root.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (null != qcRecyclerItemListener) {
+//                        qcRecyclerItemListener.onItemClick(v, position, menuSubViewHolder.item);
+//                    }
+//                }
+//            });
         }
     }
 }

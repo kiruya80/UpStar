@@ -25,6 +25,9 @@ public class TalkFragment extends QcBaseLifeFragment {
     }
 
 
+    public void setSubType(int subType) {
+    }
+
     @Override
     protected void needInitToOnCreate() {
 

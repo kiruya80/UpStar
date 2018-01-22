@@ -4,15 +4,18 @@ import com.ulling.lib.core.entities.QcBaseItem;
 import com.ulling.upstar.R;
 import com.ulling.upstar.base.BaseViewHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by KILHO on 2018. 1. 20..
  */
 
 public class Menu extends QcBaseItem {
     private String name;
-    private SubMenu subMenu;
+    private List<SubMenu> subMenu;
 
-    public Menu(int type, String name, SubMenu subMenu) {
+    public Menu(int type, String name, List<SubMenu>  subMenu) {
         super();
         this.type = type;
         this.name = name;
@@ -27,12 +30,20 @@ public class Menu extends QcBaseItem {
         this.name = name;
     }
 
-    public SubMenu getSubMenu() {
+    public List<SubMenu> getSubMenu() {
         return subMenu;
     }
 
-    public void setSubMenu(SubMenu subMenu) {
+    public void setSubMenu(List<SubMenu> subMenu) {
         this.subMenu = subMenu;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "name='" + name + '\'' +
+                ", subMenu=" + subMenu +
+                '}';
     }
 
     public static class SubMenu extends QcBaseItem {
@@ -59,11 +70,4 @@ public class Menu extends QcBaseItem {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "name='" + name + '\'' +
-                ", subMenu=" + subMenu +
-                '}';
-    }
 }

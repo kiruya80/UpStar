@@ -2,19 +2,19 @@
 <resources>
     <string-array name="menu">
         <item>@string/menu_market_price</item>
-        <item>@string/menu_talk</item>
         <item>@string/menu_coin_calculator</item>
+        <item>@string/menu_talk</item>
     </string-array>
 
     <string-array name="menu_market_price_sub">
         <item>@string/str_upbit</item>
         <item>@string/str_bitrex</item>
     </string-array>
-    <string-array name="menu_talk_sub">
-        <item>@string/str_all</item>
-    </string-array>
     <string-array name="menu_coin_calculator_sub">
         <item>@string/str_calculator</item>
+    </string-array>
+    <string-array name="menu_talk_sub">
+        <item>@string/str_all</item>
     </string-array>
 
 </resources>

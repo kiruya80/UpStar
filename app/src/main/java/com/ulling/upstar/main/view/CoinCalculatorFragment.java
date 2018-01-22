@@ -24,6 +24,8 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment {
         return fragment;
     }
 
+    public void setSubType(int subType) {
+    }
     @Override
     protected void needInitToOnCreate() {
 

@@ -172,7 +172,6 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
      */
     @Override
     public QcBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        QcLog.i("onCreateViewHolder == ");
 
         int viewTypeResId = needLayoutIdFromItemViewType(viewType);
         if (viewTypeResId != 0) {
@@ -192,7 +191,6 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
      */
     @Override
     public void onBindViewHolder(QcBaseViewHolder holder, int position) {
-        QcLog.i("onBindViewHolder == ");
         if (holder == null) {
             return;
         }
