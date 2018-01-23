@@ -1,5 +1,6 @@
 package com.ulling.upstar.main.view;
 
+import android.animation.Animator;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -154,11 +155,66 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     }
 
     private void setCoinPriceView() {
+
         if (isPriceRecyclerView) {
-            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
+
+            viewBinding.recyclerViewMarketPrice.animate()
+                    .setDuration(1000)
+                    .translationY(-400)
+                    .withLayer()
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+
+//            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
             viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
         } else {
-            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
+
+            viewBinding.recyclerViewMarketPrice.animate()
+                    .setDuration(1000)
+                    .translationY(400)
+                    .withLayer()
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+
+//            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
             viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_more);
         }
     }
@@ -219,6 +275,8 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
         adapterCoinPrice.addAll(menuCoinPriceItems);
         adapterTalk.addAll(menuTalkItems);
         adapterCalculator.addAll(menuCalculatorItems);
+
+        QcLog.e("viewBinding.recyclerViewMarketPrice == " + viewBinding.recyclerViewMarketPrice.getHeight());
     }
 
 
