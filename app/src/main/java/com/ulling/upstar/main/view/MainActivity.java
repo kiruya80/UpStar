@@ -24,7 +24,6 @@ import com.ulling.upstar.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN;
 
 /**
  * 메인화면
@@ -101,23 +100,22 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         toggle.syncState();
 
         viewBinding.navView.setNavigationItemSelectedListener(this);
-        setNavigationMenu();
+//        setNavigationMenu();
 
         mDrawerMenuFragment = DrawerMenuFragment.getInstance(viewBinding.drawerLayout);
-//        mDrawerMenuFragment.setListener(new DrawerMenuFragment.OnMenuListener() {
-//
-//            @Override
-//            public void onSelected(int type, int sub) {
-//                if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
-//                    viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
-//                setFragment(type);
-//            }
-//        });
+        mDrawerMenuFragment.setListener(new DrawerMenuFragment.OnMenuListener() {
 
-//        QcActivityUtils.replaceFragment(getSupportFragmentManager(),
-//                mDrawerMenuFragment,
-//                R.id.frameDrawer,
-//                DrawerMenuFragment.class.getSimpleName());
+            @Override
+            public void onSelected(int fragType, int subType) {
+                if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
+                    viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                setFragment(fragType, subType);
+            }
+        });
+        QcActivityUtils.replaceFragment(getSupportFragmentManager(),
+                mDrawerMenuFragment,
+                R.id.frameDrawer,
+                DrawerMenuFragment.class.getSimpleName());
 
 
         setFragment(FRAG_TYPE_MARKET_PRICE, 0);
@@ -135,31 +133,31 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         for (int i = 0; i < menu_market_price_sub.length; i++) {
             QcLog.e("menu_market_price_sub === " + priceMenuItemId);
             MenuItem item = subMenu1.add(FRAG_TYPE_MARKET_PRICE, priceMenuItemId, 0, menu_market_price_sub[i]);
-            item.setIcon(R.drawable.ic_menu_camera); // add icon with drawable resource
+            item.setIcon(R.drawable.ic_upbit); // add icon with drawable resource
             priceId.add(priceMenuItemId);
             priceMenuItemId++;
         }
 
 
-        SubMenu subMenu2 = naviMenu.addSubMenu(getResources().getString(R.string.menu_coin_calculator));
+        SubMenu subMenu2 = naviMenu.addSubMenu(getResources().getString(R.string.menu_talk));
         String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
         caculatorId = new ArrayList<>();
         for (int i = 0; i < menu_talk_sub.length; i++) {
             QcLog.e("menu_talk_sub === " + caculatorMenuItemId);
             MenuItem item = subMenu2.add(FRAG_TYPE_COIN_CALCULATOR, caculatorMenuItemId, 0, menu_talk_sub[i]);
-            item.setIcon(R.drawable.ic_menu_slideshow); // add icon with drawable resource
+            item.setIcon(R.drawable.ic_bitcoin); // add icon with drawable resource
             caculatorId.add(caculatorMenuItemId);
             caculatorMenuItemId++;
         }
 
 
-        SubMenu subMenu3 = naviMenu.addSubMenu(getResources().getString(R.string.menu_talk));
+        SubMenu subMenu3 = naviMenu.addSubMenu(getResources().getString(R.string.menu_coin_calculator));
         String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
         talkId = new ArrayList<>();
         for (int i = 0; i < menu_coin_calculator_sub.length; i++) {
             QcLog.e("menu_coin_calculator_sub === " + talkMenuItemId);
             MenuItem item = subMenu3.add(FRAG_TYPE_TALK, talkMenuItemId, 0, menu_coin_calculator_sub[i]);
-            item.setIcon(R.drawable.ic_menu_camera); // add icon with drawable resource
+            item.setIcon(R.drawable.ic_bitfinex); // add icon with drawable resource
             talkId.add(talkMenuItemId);
             talkMenuItemId++;
         }
@@ -201,13 +199,6 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
         return true;
     }
 
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
     public void setToolBar(int type) {
         if (type == ACTIONBAR_LONG) {
             float heightDp = getResources().getDimension(R.dimen.p800);
@@ -245,15 +236,15 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     /**

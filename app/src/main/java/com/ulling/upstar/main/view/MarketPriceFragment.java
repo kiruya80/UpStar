@@ -18,9 +18,6 @@ import com.ulling.upstar.model.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN;
-import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN_SUB;
-
 /**
  * 거래소별 시세
  * https://steemit.com/kr/@nhj12311/api
@@ -50,7 +47,7 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needInitToOnCreate() {
-        resetMenuData();
+//        resetMenuData();
     }
 
     @Override
@@ -139,42 +136,6 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
         }
     };
 
-
-
-    public void resetMenuData() {
-        // Add some sample items.
-        String[] menu = getResources().getStringArray(R.array.menu);
-
-        for (int i = 0; i < menu.length; i++) {
-
-            List<Menu.SubMenu> subMenu = new ArrayList<Menu.SubMenu>();
-
-            if (getResources().getString(R.string.menu_market_price).equals(menu[i])) {
-                String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
-
-                for (int j = 0; j < menu_market_price_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_market_price_sub[j]);
-                    subMenu.add(menuSub);
-                }
-
-            } else if (getResources().getString(R.string.menu_talk).equals(menu[i])) {
-                String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
-                for (int j = 0; j < menu_talk_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_talk_sub[j]);
-                    subMenu.add(menuSub);
-                }
-
-            } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu[i])) {
-                String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
-                for (int j = 0; j < menu_coin_calculator_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_coin_calculator_sub[j]);
-                    subMenu.add(menuSub);
-                }
-            }
-            Menu mMenu = new Menu(TYPE_MENU_MAIN, menu[i], subMenu);
-            menuItems.add(mMenu);
-        }
-    }
 
 }
 

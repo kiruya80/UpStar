@@ -12,14 +12,23 @@ import java.util.List;
  */
 
 public class Menu extends QcBaseItem {
+    private int fragType;
     private String name;
-    private List<SubMenu> subMenu;
+    private int imgUrl;
 
-    public Menu(int type, String name, List<SubMenu>  subMenu) {
+    public Menu(int fragType, String name, int imgUrl) {
         super();
-        this.type = type;
+        this.fragType = fragType;
         this.name = name;
-        this.subMenu = subMenu;
+        this.imgUrl = imgUrl;
+    }
+
+    public int getFragType() {
+        return fragType;
+    }
+
+    public void setFragType(int fragType) {
+        this.fragType = fragType;
     }
 
     public String getName() {
@@ -30,44 +39,20 @@ public class Menu extends QcBaseItem {
         this.name = name;
     }
 
-    public List<SubMenu> getSubMenu() {
-        return subMenu;
+    public int getImgUrl() {
+        return imgUrl;
     }
 
-    public void setSubMenu(List<SubMenu> subMenu) {
-        this.subMenu = subMenu;
+    public void setImgUrl(int imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override
     public String toString() {
         return "Menu{" +
-                "name='" + name + '\'' +
-                ", subMenu=" + subMenu +
+                "fragType=" + fragType +
+                ", name='" + name + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
-
-    public static class SubMenu extends QcBaseItem {
-        private String name;
-
-        public SubMenu(String name) {
-            super();
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return "SubMenu{" +
-                    "name='" + name + '\'' +
-                    '}';
-        }
-    }
-
 }

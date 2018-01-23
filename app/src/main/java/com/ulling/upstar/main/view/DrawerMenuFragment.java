@@ -1,11 +1,13 @@
 package com.ulling.upstar.main.view;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
+import com.ulling.lib.core.listener.OnSingleClickListener;
 import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.util.QcToast;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
@@ -17,23 +19,35 @@ import com.ulling.upstar.model.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN;
-import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_MENU_MAIN_SUB;
+import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_COIN_CALCULATOR;
+import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_MARKET_PRICE;
+import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_TALK;
 
 public class DrawerMenuFragment extends QcBaseLifeFragment {
 
     private static DrawerLayout drawer;
     private FragmentDrawerMenuBinding viewBinding;
-    public List<Menu> menuItems = new ArrayList<Menu>();
-    private MenuAdapter menuAdapter;
     private OnMenuListener listener;
+
+    private List<Menu> menuCoinPriceItems = new ArrayList<Menu>();
+    private List<Menu> menuTalkItems = new ArrayList<Menu>();
+    private List<Menu> menuCalculatorItems = new ArrayList<Menu>();
+
+
+    private MenuAdapter adapterCoinPrice;
+    private MenuAdapter adapterTalk;
+    private MenuAdapter adapterCalculator;
+
+    boolean isPriceRecyclerView = true;
+    boolean isTalkRecyclerView = false;
+    boolean isCalculatorRecyclerView = false;
 
     public void setListener(OnMenuListener listener) {
         this.listener = listener;
     }
 
-    public interface OnMenuListener  {
-        void onSelected(int main, int sub);
+    public interface OnMenuListener {
+        void onSelected(int fragType, int subType);
     }
 
     public DrawerMenuFragment() {
@@ -48,7 +62,6 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needInitToOnCreate() {
-        resetMenuData();
     }
 
     @Override
@@ -64,7 +77,6 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needInitViewModel() {
-
     }
 
     @Override
@@ -75,9 +87,126 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     @Override
     protected void needUIBinding() {
         viewBinding = (FragmentDrawerMenuBinding) getViewDataBinding();
-        viewBinding.recyclerView.setLayoutManager(new GridLayoutManager(qCon, 1));
-        menuAdapter = new MenuAdapter(qCon, qcRecyclerItemListener);
-        viewBinding.recyclerView.setAdapter(menuAdapter);
+
+
+        adapterCoinPrice = new MenuAdapter(qCon, qcPriceRecyclerItemListener);
+        adapterTalk = new MenuAdapter(qCon, qcTalkRecyclerItemListener);
+        adapterCalculator = new MenuAdapter(qCon, qcCalculatorRecyclerItemListener);
+
+        viewBinding.recyclerViewMarketPrice.setLayoutManager(new GridLayoutManager(qCon, 1));
+        viewBinding.recyclerViewMarketPrice.setAdapter(adapterCoinPrice);
+        viewBinding.recyclerViewMarketPrice.setNestedScrollingEnabled(false);
+
+        viewBinding.recyclerViewTalk.setLayoutManager(new GridLayoutManager(qCon, 1));
+        viewBinding.recyclerViewTalk.setAdapter(adapterTalk);
+        viewBinding.recyclerViewTalk.setNestedScrollingEnabled(false);
+
+
+        viewBinding.recyclerViewCoinCalculator.setLayoutManager(new GridLayoutManager(qCon, 1));
+        viewBinding.recyclerViewCoinCalculator.setAdapter(adapterCalculator);
+        viewBinding.recyclerViewCoinCalculator.setNestedScrollingEnabled(false);
+
+        viewBinding.btnPriceExpened.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                isPriceRecyclerView = !isPriceRecyclerView;
+                setCoinPriceView();
+            }
+        });
+        viewBinding.btnTalkExpened.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                isTalkRecyclerView = !isTalkRecyclerView;
+                setTalkView();
+
+            }
+        });
+        viewBinding.btnCalculatorExpened.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                isCalculatorRecyclerView = !isCalculatorRecyclerView;
+                setCalculatorView();
+
+            }
+        });
+
+        setCoinPriceData();
+        setTalkData();
+        setCalculatorData();
+
+        setCoinPriceView();
+        setTalkView();
+        setCalculatorView();
+    }
+
+
+    private void setCoinPriceData() {
+        menuCoinPriceItems = new ArrayList<Menu>();
+        String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_market_price_sub_img);
+
+        for (int i = 0; i < menu_market_price_sub.length; i++) {
+            int resourceId = typedArray.getResourceId(i, -1);
+            Menu menu = new Menu(FRAG_TYPE_MARKET_PRICE, menu_market_price_sub[i], resourceId);
+            menuCoinPriceItems.add(menu);
+        }
+        typedArray.recycle();
+    }
+
+    private void setCoinPriceView() {
+        if (isPriceRecyclerView) {
+            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
+            viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
+        } else {
+            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
+            viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_more);
+        }
+    }
+
+    private void setTalkData() {
+        menuTalkItems = new ArrayList<Menu>();
+        String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
+
+        for (int i = 0; i < menu_talk_sub.length; i++) {
+            int resourceId = typedArray.getResourceId(i, -1);
+            Menu menu = new Menu(FRAG_TYPE_TALK, menu_talk_sub[i], resourceId);
+            menuTalkItems.add(menu);
+        }
+        typedArray.recycle();
+    }
+
+    private void setTalkView() {
+        if (isTalkRecyclerView) {
+            viewBinding.recyclerViewTalk.setVisibility(View.VISIBLE);
+            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
+        } else {
+            viewBinding.recyclerViewTalk.setVisibility(View.GONE);
+            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
+        }
+    }
+
+    private void setCalculatorData() {
+        menuCalculatorItems = new ArrayList<Menu>();
+        String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
+
+        for (int i = 0; i < menu_coin_calculator_sub.length; i++) {
+            int resourceId = typedArray.getResourceId(i, -1);
+            Menu menu = new Menu(FRAG_TYPE_COIN_CALCULATOR, menu_coin_calculator_sub[i], resourceId);
+            menuCalculatorItems.add(menu);
+        }
+        typedArray.recycle();
+    }
+
+    private void setCalculatorView() {
+        if (isCalculatorRecyclerView) {
+            viewBinding.recyclerViewCoinCalculator.setVisibility(View.VISIBLE);
+            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
+        } else {
+            viewBinding.recyclerViewCoinCalculator.setVisibility(View.GONE);
+            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
+        }
     }
 
     @Override
@@ -87,39 +216,39 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needSubscribeUiFromViewModel() {
-        menuAdapter.addAll(menuItems);
+        adapterCoinPrice.addAll(menuCoinPriceItems);
+        adapterTalk.addAll(menuTalkItems);
+        adapterCalculator.addAll(menuCalculatorItems);
     }
 
 
     @Override
     protected void needDestroyData() {
-        qcRecyclerItemListener = null;
+        qcPriceRecyclerItemListener = null;
+        qcTalkRecyclerItemListener = null;
+        qcCalculatorRecyclerItemListener = null;
     }
 
-    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
+    public void moveFragment(View view, int position, Menu menu) {
+        if (listener != null) {
+            if (FRAG_TYPE_MARKET_PRICE == menu.getType()) {
+                listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, position);
+
+            } else if (FRAG_TYPE_TALK == menu.getType()) {
+                listener.onSelected(MainActivity.FRAG_TYPE_TALK, position);
+
+            } else if (FRAG_TYPE_COIN_CALCULATOR == menu.getType()) {
+                listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, position);
+            }
+        }
+    }
+
+    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcPriceRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
 
         @Override
         public void onItemClick(View view, int position, Menu menu) {
             QcToast.getInstance().show("onItemClick == " + menu.toString());
-            if (listener != null) {
-                if (TYPE_MENU_MAIN == menu.getType()) {
-                    if (getResources().getString(R.string.menu_market_price).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, 0);
-                    } else if (getResources().getString(R.string.menu_talk).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_TALK, 0);
-                    } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, 0);
-                    }
-                } else if (TYPE_MENU_MAIN_SUB == menu.getType()) {
-                    if (getResources().getString(R.string.menu_market_price).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, 0);
-                    } else if (getResources().getString(R.string.menu_talk).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_TALK, 0);
-                    } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu.getName())) {
-                        listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, 0);
-                    }
-                }
-            }
+            moveFragment(view, position, menu);
         }
 
         @Override
@@ -144,40 +273,65 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     };
 
 
-    public void resetMenuData() {
-        // Add some sample items.
-        String[] menu = getResources().getStringArray(R.array.menu);
+    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcTalkRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
 
-        for (int i = 0; i < menu.length; i++) {
-
-              List<Menu.SubMenu> subMenu = new ArrayList<Menu.SubMenu>();
-
-            if (getResources().getString(R.string.menu_market_price).equals(menu[i])) {
-                String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
-
-                for (int j = 0; j < menu_market_price_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_market_price_sub[j]);
-                    subMenu.add(menuSub);
-                }
-
-            } else if (getResources().getString(R.string.menu_talk).equals(menu[i])) {
-                String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
-                for (int j = 0; j < menu_talk_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_talk_sub[j]);
-                    subMenu.add(menuSub);
-                }
-
-            } else if (getResources().getString(R.string.menu_coin_calculator).equals(menu[i])) {
-                String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
-                for (int j = 0; j < menu_coin_calculator_sub.length; j++) {
-                    Menu.SubMenu menuSub = new Menu.SubMenu(menu_coin_calculator_sub[j]);
-                    subMenu.add(menuSub);
-                }
-            }
-            Menu mMenu = new Menu(TYPE_MENU_MAIN, menu[i], subMenu);
-            menuItems.add(mMenu);
+        @Override
+        public void onItemClick(View view, int position, Menu menu) {
+            QcToast.getInstance().show("onItemClick == " + menu.toString());
+            moveFragment(view, position, menu);
         }
-        QcLog.e("menuItems == " + menuItems.size());
-    }
+
+        @Override
+        public void onItemLongClick(View view, int position, Menu menu) {
+
+        }
+
+        @Override
+        public void onItemCheck(boolean checked, int position, Menu menu) {
+
+        }
+
+        @Override
+        public void onDeleteItem(int itemPosition, Menu menu) {
+
+        }
+
+        @Override
+        public void onReload() {
+
+        }
+    };
+
+
+    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcCalculatorRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
+
+        @Override
+        public void onItemClick(View view, int position, Menu menu) {
+            QcToast.getInstance().show("onItemClick == " + menu.toString());
+            moveFragment(view, position, menu);
+        }
+
+        @Override
+        public void onItemLongClick(View view, int position, Menu menu) {
+
+        }
+
+        @Override
+        public void onItemCheck(boolean checked, int position, Menu menu) {
+
+        }
+
+        @Override
+        public void onDeleteItem(int itemPosition, Menu menu) {
+
+        }
+
+        @Override
+        public void onReload() {
+
+        }
+    };
+
+
 }
 
