@@ -118,7 +118,7 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                             .setInterpolator(new AccelerateInterpolator()).start();
                 } else {
 //                    viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnPriceExpened.animate().rotation(180).setDuration(500).withLayer()
+                    viewBinding.btnPriceExpened.animate().rotation(-180).setDuration(500).withLayer()
                             .setInterpolator(new AccelerateInterpolator()).start();
                 }
                 setCoinPriceView();
@@ -130,10 +130,12 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                 isTalkRecyclerView = !isTalkRecyclerView;
                 if (isTalkRecyclerView) {
                     viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnTalkExpened.animate().rotation(-180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                    viewBinding.btnTalkExpened.animate().rotation(180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
                 } else {
                     viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
-                    viewBinding.btnTalkExpened.animate().rotation(180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                    viewBinding.btnTalkExpened.animate().rotation(-180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
                 }
                 setTalkView();
 
@@ -145,10 +147,12 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                 isCalculatorRecyclerView = !isCalculatorRecyclerView;
                 if (isCalculatorRecyclerView) {
                     viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnCalculatorExpened.animate().rotation(-180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                    viewBinding.btnCalculatorExpened.animate().rotation(180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
                 } else {
                     viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
-                    viewBinding.btnCalculatorExpened.animate().rotation(180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                    viewBinding.btnCalculatorExpened.animate().rotation(-180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
                 }
                 setCalculatorView();
 
@@ -256,10 +260,10 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     private void setTalkView() {
         if (isTalkRecyclerView) {
             viewBinding.recyclerViewTalk.setVisibility(View.VISIBLE);
-            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
+//            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
         } else {
             viewBinding.recyclerViewTalk.setVisibility(View.GONE);
-            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
+//            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
         }
     }
 
