@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.lib.core.listener.OnSingleClickListener;
@@ -111,6 +112,15 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
             @Override
             public void onSingleClick(View v) {
                 isPriceRecyclerView = !isPriceRecyclerView;
+                if (isPriceRecyclerView) {
+//                    viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_more);
+                    viewBinding.btnPriceExpened.animate().rotation(180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
+                } else {
+//                    viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
+                    viewBinding.btnPriceExpened.animate().rotation(180).setDuration(500).withLayer()
+                            .setInterpolator(new AccelerateInterpolator()).start();
+                }
                 setCoinPriceView();
             }
         });
@@ -118,6 +128,13 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
             @Override
             public void onSingleClick(View v) {
                 isTalkRecyclerView = !isTalkRecyclerView;
+                if (isTalkRecyclerView) {
+                    viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
+                    viewBinding.btnTalkExpened.animate().rotation(-180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                } else {
+                    viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
+                    viewBinding.btnTalkExpened.animate().rotation(180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                }
                 setTalkView();
 
             }
@@ -126,6 +143,13 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
             @Override
             public void onSingleClick(View v) {
                 isCalculatorRecyclerView = !isCalculatorRecyclerView;
+                if (isCalculatorRecyclerView) {
+                    viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
+                    viewBinding.btnCalculatorExpened.animate().rotation(-180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                } else {
+                    viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
+                    viewBinding.btnCalculatorExpened.animate().rotation(180).setDuration(500).setInterpolator(new AccelerateInterpolator()).start();
+                }
                 setCalculatorView();
 
             }
@@ -185,9 +209,7 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                     });
 
 //            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
-            viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
         } else {
-
             viewBinding.recyclerViewMarketPrice.animate()
                     .setDuration(1000)
                     .translationY(400)
@@ -215,7 +237,6 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
                     });
 
 //            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
-            viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_more);
         }
     }
 
@@ -258,10 +279,10 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     private void setCalculatorView() {
         if (isCalculatorRecyclerView) {
             viewBinding.recyclerViewCoinCalculator.setVisibility(View.VISIBLE);
-            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
+//            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
         } else {
             viewBinding.recyclerViewCoinCalculator.setVisibility(View.GONE);
-            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
+//            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
         }
     }
 

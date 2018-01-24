@@ -37,9 +37,9 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
     public static final int ACTIONBAR_SHORT = 0;
     public static final int ACTIONBAR_LONG = 1;
 
-    private ArrayList<Integer> priceId = new ArrayList<>();
-    private ArrayList<Integer> caculatorId = new ArrayList<>();
-    private ArrayList<Integer> talkId = new ArrayList<>();
+    private ArrayList<Integer> priceId = new ArrayList<Integer>();
+    private ArrayList<Integer> caculatorId = new ArrayList<Integer>();
+    private ArrayList<Integer> talkId = new ArrayList<Integer>();
 
     private ActivityMainBinding viewBinding;
 
@@ -129,7 +129,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         SubMenu subMenu1 = naviMenu.addSubMenu(getResources().getString(R.string.menu_market_price));
         String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
-        priceId = new ArrayList<>();
+        priceId = new ArrayList<Integer>();
         for (int i = 0; i < menu_market_price_sub.length; i++) {
             QcLog.e("menu_market_price_sub === " + priceMenuItemId);
             MenuItem item = subMenu1.add(FRAG_TYPE_MARKET_PRICE, priceMenuItemId, 0, menu_market_price_sub[i]);
@@ -141,7 +141,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         SubMenu subMenu2 = naviMenu.addSubMenu(getResources().getString(R.string.menu_talk));
         String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
-        caculatorId = new ArrayList<>();
+        caculatorId = new ArrayList<Integer>();
         for (int i = 0; i < menu_talk_sub.length; i++) {
             QcLog.e("menu_talk_sub === " + caculatorMenuItemId);
             MenuItem item = subMenu2.add(FRAG_TYPE_COIN_CALCULATOR, caculatorMenuItemId, 0, menu_talk_sub[i]);
@@ -153,7 +153,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 
         SubMenu subMenu3 = naviMenu.addSubMenu(getResources().getString(R.string.menu_coin_calculator));
         String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
-        talkId = new ArrayList<>();
+        talkId = new ArrayList<Integer>();
         for (int i = 0; i < menu_coin_calculator_sub.length; i++) {
             QcLog.e("menu_coin_calculator_sub === " + talkMenuItemId);
             MenuItem item = subMenu3.add(FRAG_TYPE_TALK, talkMenuItemId, 0, menu_coin_calculator_sub[i]);
