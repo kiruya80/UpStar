@@ -10,18 +10,10 @@ import java.util.List;
 /**
  * Created by KILHO on 2018. 1. 20..
  */
-
 public class Menu extends QcBaseItem {
     private int fragType;
     private String name;
     private int imgUrl;
-
-    public Menu(int fragType, String name, int imgUrl) {
-        super();
-        this.fragType = fragType;
-        this.name = name;
-        this.imgUrl = imgUrl;
-    }
 
     public Menu(int type, int fragType, String name, int imgUrl) {
         super();

@@ -1,18 +1,13 @@
 package com.ulling.upstar.main.view;
 
-import android.animation.Animator;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
-import com.ulling.lib.core.listener.OnSingleClickListener;
-import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.util.QcToast;
-import com.ulling.lib.core.util.QcUtils;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentDrawerMenuBinding;
@@ -20,13 +15,15 @@ import com.ulling.upstar.main.adapter.MenuAdapter;
 import com.ulling.upstar.model.Menu;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_SUB;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_COIN_CALCULATOR;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_MARKET_PRICE;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_TALK;
 
+/**
+ * 드로우 메뉴
+ */
 public class DrawerMenuFragment extends QcBaseLifeFragment {
 
     private static DrawerLayout drawer;

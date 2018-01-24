@@ -11,10 +11,9 @@
         <ImageView
             android:id="@+id/imgDriver"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p2"
+            android:layout_height="@dimen/p1"
             android:layout_marginTop="@dimen/p50"
-            android:background="@color/color_e5e5e5" />
-
+            android:background="@color/color_light_gray" />
 
         <LinearLayout
             android:id="@+id/titleRoot"

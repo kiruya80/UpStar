@@ -8,6 +8,10 @@ import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentCoinCalculatorBinding;
 
+/**
+ * 메뉴
+ * ㄴ 자산관리
+ */
 public class CoinCalculatorFragment extends QcBaseLifeFragment {
 
     private FragmentCoinCalculatorBinding viewBinding;
@@ -57,10 +61,6 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment {
     @Override
     protected void needUIBinding() {
         viewBinding = (FragmentCoinCalculatorBinding) getViewDataBinding();
-//        setToolbar(viewBinding.toolbar);
-//        actionBar.setTitle(getResources().getString(R.string.menu_coin_calculator));
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

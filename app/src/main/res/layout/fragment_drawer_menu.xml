@@ -46,18 +46,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0px"
+            android:layout_weight="1"
             app:layoutManager="LinearLayoutManager"
             tools:context=".main.view.DrawerMenuFragment"
-            tools:listitem="@layout/item_menu_title" />
-
-        <ImageView
-            android:id="@+id/imgDriver"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/p2"
-            android:layout_marginBottom="@dimen/p20"
-            android:layout_marginTop="@dimen/p50"
-            android:background="@color/color_e5e5e5" />
+            tools:listitem="@layout/item_menu" />
 
     </LinearLayout>
 </layout>

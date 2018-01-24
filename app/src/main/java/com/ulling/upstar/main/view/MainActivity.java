@@ -24,7 +24,6 @@ import com.ulling.upstar.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * 메인화면
  */
@@ -92,6 +91,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
 //        }
 
         setSupportActionBar(viewBinding.includedAppBarMain.toolbar);
+        actionBar =  getSupportActionBar();
 
         viewBinding.drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -262,6 +262,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
                     R.id.frameContainer,
                     marketPriceFragment.getFragmentTag());
             setToolBar(ACTIONBAR_LONG);
+            actionBar.setTitle(getResources().getString(R.string.app_name));
 
         } else if (type == FRAG_TYPE_COIN_CALCULATOR) {
             coinCalculatorFragment.setSubType(subType);
@@ -271,6 +272,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
                     R.id.frameContainer,
                     coinCalculatorFragment.getFragmentTag());
             setToolBar(ACTIONBAR_SHORT);
+            actionBar.setTitle(getResources().getString(R.string.menu_coin_calculator));
 
         } else if (type == FRAG_TYPE_TALK) {
             talkFragment.setSubType(subType);
@@ -280,6 +282,7 @@ public class MainActivity extends QcBaseLifeActivity implements NavigationView.O
                     R.id.frameContainer,
                     talkFragment.getFragmentTag());
             setToolBar(ACTIONBAR_SHORT);
+            actionBar.setTitle(getResources().getString(R.string.menu_talk));
 
         }
     }

@@ -23,15 +23,9 @@ public class MenuAdapter extends QcRecyclerBaseAdapter<Menu> {
     public static final int TYPE_TITLE = 1;
     public static final int TYPE_SUB = 2;
 
-//    private static final float MAX_MARGIN = 16;
-//    private static final float MIN_MARGIN = 2;
-
-//    private ValueAnimator marginAnimator = ValueAnimator.ofFloat(MAX_MARGIN, MIN_MARGIN); // replace with dimens
-
     public MenuAdapter(Context qCon, QcRecyclerItemListener qcRecyclerItemListener) {
         super(qCon, qcRecyclerItemListener);
     }
-
 
     @Override
     protected void needInitToOnCreate() {

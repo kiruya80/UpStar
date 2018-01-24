@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ulling.lib.core.util.QcLog;
@@ -17,6 +18,7 @@ import com.ulling.lib.core.util.QcLog;
 public abstract class QcBaseLifeActivity extends AppCompatActivity {
     public Context qCon;
     public String APP_NAME;
+    public ActionBar actionBar;
 
     /**
      * 필수
