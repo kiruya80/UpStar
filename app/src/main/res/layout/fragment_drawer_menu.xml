@@ -42,131 +42,22 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.NestedScrollView
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".main.view.DrawerMenuFragment"
+            tools:listitem="@layout/item_menu_title" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p200"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/p50"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/nanumsquare_r"
-                        android:text="@string/menu_market_price"
-                        android:textColor="@color/color_black"
-                        android:textSize="@dimen/p70" />
-
-                    <ImageButton
-                        android:id="@+id/btnPriceExpened"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/p30"
-                        android:background="@drawable/ic_expand_more"
-                        android:foreground="?android:attr/selectableItemBackground" />
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView_market_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:context=".main.view.DrawerMenuFragment"
-                    tools:listitem="@layout/item_menu" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p2"
-                    android:background="@color/color_e5e5e5" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p200"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/p50"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/nanumsquare_r"
-                        android:text="@string/menu_talk"
-                        android:textColor="@color/color_black"
-                        android:textSize="@dimen/p70" />
-
-                    <ImageButton
-                        android:id="@+id/btnTalkExpened"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/p30"
-                        android:background="@drawable/ic_expand_more"
-                        android:foreground="?android:attr/selectableItemBackground" />
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView_talk"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:context=".main.view.DrawerMenuFragment"
-                    tools:listitem="@layout/item_menu" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p2"
-                    android:background="@color/color_e5e5e5" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p200"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/p50"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/nanumsquare_r"
-                        android:text="@string/menu_coin_calculator"
-                        android:textColor="@color/color_black"
-                        android:textSize="@dimen/p70" />
-
-                    <ImageButton
-                        android:id="@+id/btnCalculatorExpened"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/p30"
-                        android:background="@drawable/ic_expand_more"
-                        android:foreground="?android:attr/selectableItemBackground" />
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView_coin_calculator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:context=".main.view.DrawerMenuFragment"
-                    tools:listitem="@layout/item_menu" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p100" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        <ImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p2"
+            android:layout_marginBottom="@dimen/p20"
+            android:layout_marginTop="@dimen/p50"
+            android:background="@color/color_e5e5e5" />
 
     </LinearLayout>
 </layout>

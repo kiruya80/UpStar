@@ -69,16 +69,31 @@ public class QcUtils {
 
     }
 
-    public static int getPixelToDp(Context context, float dp) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                context.getResources().getDisplayMetrics());
+//    public static int getPixelToDp(Context context, float dp) {
+//        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+//                context.getResources().getDisplayMetrics());
+//        return px;
+//    }
+
+    public static float convertDpToPixel(Context context, float dp){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
 
-    public static int getDpFromPx(float px) {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, displaymetrics);
+//    public static int getDpFromPx(float px) {
+//        DisplayMetrics displaymetrics = new DisplayMetrics();
+//        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, displaymetrics);
+//    }
+
+    public static float convertPixelsToDp(Context context, float px){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
     }
+
 
     public static int getStatusBarHeight(final Context context) {
         final Resources resources = context.getResources();

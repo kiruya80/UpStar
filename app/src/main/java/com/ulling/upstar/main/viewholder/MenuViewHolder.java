@@ -1,11 +1,8 @@
 package com.ulling.upstar.main.viewholder;
 
 import android.databinding.ViewDataBinding;
-import android.view.View;
 
 import com.ulling.lib.core.viewutil.adapter.QcBaseViewHolder;
-import com.ulling.upstar.R;
-import com.ulling.upstar.databinding.ItemMarketPriceBinding;
 import com.ulling.upstar.databinding.ItemMenuBinding;
 import com.ulling.upstar.model.Menu;
 

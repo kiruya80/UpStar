@@ -23,6 +23,14 @@ public class Menu extends QcBaseItem {
         this.imgUrl = imgUrl;
     }
 
+    public Menu(int type, int fragType, String name, int imgUrl) {
+        super();
+        this.type = type;
+        this.fragType = fragType;
+        this.name = name;
+        this.imgUrl = imgUrl;
+    }
+
     public int getFragType() {
         return fragType;
     }

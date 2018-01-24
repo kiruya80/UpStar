@@ -4,29 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p150"
-        android:gravity="center"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/img"
-            android:layout_width="@dimen/p100"
-            android:layout_height="@dimen/p100"
-            android:layout_marginLeft="@dimen/p100"
-            tools:background="@mipmap/ic_bitcoin" />
+            android:id="@+id/imgDriver"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p2"
+            android:layout_marginTop="@dimen/p50"
+            android:background="@color/color_e5e5e5" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nanumsquare_l"
-            android:layout_marginLeft="@dimen/p50"
-            android:layout_weight="1"
-            android:textSize="@dimen/p60"
-            tools:text="name" />
+
+        <LinearLayout
+            android:id="@+id/titleRoot"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p200"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtTitleName"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/p50"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumsquare_r"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/p60"
+                tools:text="@string/menu_market_price" />
+
+            <ImageButton
+                android:id="@+id/btnPriceExpened"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/p30"
+                android:background="@drawable/ic_expand_more"
+                android:foreground="?android:attr/selectableItemBackground" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subRoot"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p150"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="@dimen/p100"
+                android:layout_height="@dimen/p100"
+                android:layout_marginLeft="@dimen/p100"
+                tools:background="@drawable/ic_bitcoin" />
+
+            <TextView
+                android:id="@+id/txtSubName"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/p50"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumsquare_l"
+                android:textSize="@dimen/p60"
+                tools:text="name" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

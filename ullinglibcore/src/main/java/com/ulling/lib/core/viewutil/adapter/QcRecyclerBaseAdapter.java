@@ -16,6 +16,7 @@ import com.ulling.lib.core.entities.QcBaseItem;
 import com.ulling.lib.core.util.QcLog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     public static final int TYPE_LOAD_PROGRESS = 999;
 
     public Context qCon;
-//    public QcBaseLifeFragment qFragment;
+    //    public QcBaseLifeFragment qFragment;
     private AndroidViewModel viewModel;
     public QcRecyclerItemListener qcRecyclerItemListener;
     /**
@@ -42,6 +43,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
      */
 //    public LiveData<List<T>> itemList;
     public List<T> itemList;
+    public boolean[] itemOpened;
 
     public interface QcRecyclerItemListener<T> {
         //        void onItemClick(View view, int position, T t, String... transName);
@@ -89,6 +91,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     /**
      * 4.
      * onCreateViewHolder 에서 뷰홉더 생성하기
+     *
      * @param viewType
      * @param binding
      * @return
@@ -201,7 +204,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         if (object == null) {
             return;
         }
-        if (object instanceof QcBaseItem ) {
+        if (object instanceof QcBaseItem) {
             QcBaseItem item = (QcBaseItem) object;
             if (item.getType() == TYPE_LOAD_FAIL) {
                 QcLog.i("TYPE_LOAD_FAIL =====" + position);
@@ -219,6 +222,13 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
     @Override
     public int getItemCount() {
         return itemList == null ? 0 : itemList.size();
+    }
+
+    public void resetItemOpend() {
+        if (itemList != null && itemList.size() > 0) {
+            itemOpened = new boolean[itemList.size()];
+            Arrays.fill(itemOpened, false);
+        }
     }
 
     protected T getItem(int position) {
@@ -259,6 +269,10 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
         if (this.itemList == null)
             this.itemList = new ArrayList<>();
         this.itemList.add(item_);
+        if (itemList != null && itemList.size() > 0) {
+            itemOpened = new boolean[itemList.size()];
+            Arrays.fill(itemOpened, false);
+        }
         notifyItemChanged(itemList.size(), 0);
     }
 
@@ -280,6 +294,10 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
 
         QcLog.e("add == " + itemList_.size());
         this.itemList = itemList_;
+        if (itemList != null && itemList.size() > 0) {
+            itemOpened = new boolean[itemList.size()];
+            Arrays.fill(itemOpened, false);
+        }
 
         notifyDataSetChanged();
     }
@@ -306,6 +324,7 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
 
     /**
      * 같은거는 제외하고 추가
+     *
      * @param itemList_
      */
     public void addListDiffResult(final List<T> itemList_) {
@@ -351,6 +370,10 @@ public abstract class QcRecyclerBaseAdapter<T> extends RecyclerView.Adapter<QcBa
 
             this.itemList.clear();
             this.itemList.addAll(itemList_);
+            if (itemList != null && itemList.size() > 0) {
+                itemOpened = new boolean[itemList.size()];
+                Arrays.fill(itemOpened, false);
+            }
             diffResult.dispatchUpdatesTo(this);
         }
     }

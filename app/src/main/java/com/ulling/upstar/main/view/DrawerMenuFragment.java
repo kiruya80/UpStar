@@ -12,6 +12,7 @@ import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.lib.core.listener.OnSingleClickListener;
 import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.util.QcToast;
+import com.ulling.lib.core.util.QcUtils;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentDrawerMenuBinding;
@@ -21,6 +22,7 @@ import com.ulling.upstar.model.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ulling.upstar.main.adapter.MenuAdapter.TYPE_SUB;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_COIN_CALCULATOR;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_MARKET_PRICE;
 import static com.ulling.upstar.main.view.MainActivity.FRAG_TYPE_TALK;
@@ -31,18 +33,14 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     private FragmentDrawerMenuBinding viewBinding;
     private OnMenuListener listener;
 
-    private List<Menu> menuCoinPriceItems = new ArrayList<Menu>();
-    private List<Menu> menuTalkItems = new ArrayList<Menu>();
-    private List<Menu> menuCalculatorItems = new ArrayList<Menu>();
+    private ArrayList<Menu> menuItems = new ArrayList<Menu>();
 
-
-    private MenuAdapter adapterCoinPrice;
-    private MenuAdapter adapterTalk;
-    private MenuAdapter adapterCalculator;
+    private MenuAdapter adapterMenu;
 
     boolean isPriceRecyclerView = true;
     boolean isTalkRecyclerView = false;
     boolean isCalculatorRecyclerView = false;
+    private float marketPriceHeight = 0;
 
     public void setListener(OnMenuListener listener) {
         this.listener = listener;
@@ -91,242 +89,93 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
         viewBinding = (FragmentDrawerMenuBinding) getViewDataBinding();
 
 
-        adapterCoinPrice = new MenuAdapter(qCon, qcPriceRecyclerItemListener);
-        adapterTalk = new MenuAdapter(qCon, qcTalkRecyclerItemListener);
-        adapterCalculator = new MenuAdapter(qCon, qcCalculatorRecyclerItemListener);
+        adapterMenu = new MenuAdapter(qCon, qcRecyclerItemListener);
 
-        viewBinding.recyclerViewMarketPrice.setLayoutManager(new GridLayoutManager(qCon, 1));
-        viewBinding.recyclerViewMarketPrice.setAdapter(adapterCoinPrice);
-        viewBinding.recyclerViewMarketPrice.setNestedScrollingEnabled(false);
+        viewBinding.recyclerView.setLayoutManager(new GridLayoutManager(qCon, 1));
+        viewBinding.recyclerView.setAdapter(adapterMenu);
+        viewBinding.recyclerView.setNestedScrollingEnabled(false);
 
-        viewBinding.recyclerViewTalk.setLayoutManager(new GridLayoutManager(qCon, 1));
-        viewBinding.recyclerViewTalk.setAdapter(adapterTalk);
-        viewBinding.recyclerViewTalk.setNestedScrollingEnabled(false);
-
-
-        viewBinding.recyclerViewCoinCalculator.setLayoutManager(new GridLayoutManager(qCon, 1));
-        viewBinding.recyclerViewCoinCalculator.setAdapter(adapterCalculator);
-        viewBinding.recyclerViewCoinCalculator.setNestedScrollingEnabled(false);
-
-        viewBinding.btnPriceExpened.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                isPriceRecyclerView = !isPriceRecyclerView;
-                if (isPriceRecyclerView) {
-//                    viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_more);
-                    viewBinding.btnPriceExpened.animate().rotation(180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                } else {
-//                    viewBinding.btnPriceExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnPriceExpened.animate().rotation(-180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                }
-                setCoinPriceView();
-            }
-        });
-        viewBinding.btnTalkExpened.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                isTalkRecyclerView = !isTalkRecyclerView;
-                if (isTalkRecyclerView) {
-                    viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnTalkExpened.animate().rotation(180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                } else {
-                    viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
-                    viewBinding.btnTalkExpened.animate().rotation(-180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                }
-                setTalkView();
-
-            }
-        });
-        viewBinding.btnCalculatorExpened.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                isCalculatorRecyclerView = !isCalculatorRecyclerView;
-                if (isCalculatorRecyclerView) {
-                    viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
-                    viewBinding.btnCalculatorExpened.animate().rotation(180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                } else {
-                    viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
-                    viewBinding.btnCalculatorExpened.animate().rotation(-180).setDuration(500).withLayer()
-                            .setInterpolator(new AccelerateInterpolator()).start();
-                }
-                setCalculatorView();
-
-            }
-        });
-
-        setCoinPriceData();
-        setTalkData();
-        setCalculatorData();
-
-        setCoinPriceView();
-        setTalkView();
-        setCalculatorView();
+        setMenuData();
     }
 
 
-    private void setCoinPriceData() {
-        menuCoinPriceItems = new ArrayList<Menu>();
+    private void setMenuData() {
+
+        menuItems = new ArrayList<Menu>();
+
+        Menu titlePrice = new Menu(MenuAdapter.TYPE_TITLE, FRAG_TYPE_MARKET_PRICE, getResources().getString(R.string.menu_market_price), 0);
+        Menu titleTalk = new Menu(MenuAdapter.TYPE_TITLE, FRAG_TYPE_TALK, getResources().getString(R.string.menu_talk), 0);
+        Menu titleCalculator = new Menu(MenuAdapter.TYPE_TITLE, FRAG_TYPE_COIN_CALCULATOR, getResources().getString(R.string.menu_coin_calculator), 0);
+
+        menuItems.add(titlePrice);
+
         String[] menu_market_price_sub = getResources().getStringArray(R.array.menu_market_price_sub);
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_market_price_sub_img);
+        TypedArray typedArray1 = getResources().obtainTypedArray(R.array.menu_market_price_sub_img);
 
         for (int i = 0; i < menu_market_price_sub.length; i++) {
-            int resourceId = typedArray.getResourceId(i, -1);
-            Menu menu = new Menu(FRAG_TYPE_MARKET_PRICE, menu_market_price_sub[i], resourceId);
-            menuCoinPriceItems.add(menu);
+            int resourceId = typedArray1.getResourceId(i, -1);
+            Menu menu = new Menu(TYPE_SUB, FRAG_TYPE_MARKET_PRICE, menu_market_price_sub[i], resourceId);
+            menuItems.add(menu);
         }
-        typedArray.recycle();
-    }
+        typedArray1.recycle();
 
-    private void setCoinPriceView() {
-
-        if (isPriceRecyclerView) {
-
-            viewBinding.recyclerViewMarketPrice.animate()
-                    .setDuration(1000)
-                    .translationY(-400)
-                    .withLayer()
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-
-//            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
-        } else {
-            viewBinding.recyclerViewMarketPrice.animate()
-                    .setDuration(1000)
-                    .translationY(400)
-                    .withLayer()
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            viewBinding.recyclerViewMarketPrice.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-
-//            viewBinding.recyclerViewMarketPrice.setVisibility(View.GONE);
-        }
-    }
-
-    private void setTalkData() {
-        menuTalkItems = new ArrayList<Menu>();
+        menuItems.add(titleTalk);
         String[] menu_talk_sub = getResources().getStringArray(R.array.menu_talk_sub);
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
+        TypedArray typedArray2 = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
 
         for (int i = 0; i < menu_talk_sub.length; i++) {
-            int resourceId = typedArray.getResourceId(i, -1);
-            Menu menu = new Menu(FRAG_TYPE_TALK, menu_talk_sub[i], resourceId);
-            menuTalkItems.add(menu);
+            int resourceId = typedArray2.getResourceId(i, -1);
+            Menu menu = new Menu(TYPE_SUB, FRAG_TYPE_TALK, menu_talk_sub[i], resourceId);
+            menuItems.add(menu);
         }
-        typedArray.recycle();
-    }
+        typedArray2.recycle();
 
-    private void setTalkView() {
-        if (isTalkRecyclerView) {
-            viewBinding.recyclerViewTalk.setVisibility(View.VISIBLE);
-//            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_less);
-        } else {
-            viewBinding.recyclerViewTalk.setVisibility(View.GONE);
-//            viewBinding.btnTalkExpened.setBackgroundResource(R.drawable.ic_expand_more);
-        }
-    }
 
-    private void setCalculatorData() {
-        menuCalculatorItems = new ArrayList<Menu>();
+        menuItems.add(titleCalculator);
         String[] menu_coin_calculator_sub = getResources().getStringArray(R.array.menu_coin_calculator_sub);
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
+        TypedArray typedArray3 = getResources().obtainTypedArray(R.array.menu_talk_sub_img);
 
         for (int i = 0; i < menu_coin_calculator_sub.length; i++) {
-            int resourceId = typedArray.getResourceId(i, -1);
-            Menu menu = new Menu(FRAG_TYPE_COIN_CALCULATOR, menu_coin_calculator_sub[i], resourceId);
-            menuCalculatorItems.add(menu);
+            int resourceId = typedArray3.getResourceId(i, -1);
+            Menu menu = new Menu(TYPE_SUB, FRAG_TYPE_COIN_CALCULATOR, menu_coin_calculator_sub[i], resourceId);
+            menuItems.add(menu);
         }
-        typedArray.recycle();
+        typedArray3.recycle();
     }
 
-    private void setCalculatorView() {
-        if (isCalculatorRecyclerView) {
-            viewBinding.recyclerViewCoinCalculator.setVisibility(View.VISIBLE);
-//            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_less);
-        } else {
-            viewBinding.recyclerViewCoinCalculator.setVisibility(View.GONE);
-//            viewBinding.btnCalculatorExpened.setBackgroundResource(R.drawable.ic_expand_more);
-        }
-    }
+
+
 
     @Override
     protected void needUIEventListener() {
-
     }
 
     @Override
     protected void needSubscribeUiFromViewModel() {
-        adapterCoinPrice.addAll(menuCoinPriceItems);
-        adapterTalk.addAll(menuTalkItems);
-        adapterCalculator.addAll(menuCalculatorItems);
-
-        QcLog.e("viewBinding.recyclerViewMarketPrice == " + viewBinding.recyclerViewMarketPrice.getHeight());
-    }
+        adapterMenu.addAll(menuItems);
+     }
 
 
     @Override
     protected void needDestroyData() {
-        qcPriceRecyclerItemListener = null;
-        qcTalkRecyclerItemListener = null;
-        qcCalculatorRecyclerItemListener = null;
+        qcRecyclerItemListener = null;
     }
 
     public void moveFragment(View view, int position, Menu menu) {
-        if (listener != null) {
+        if (listener != null && menu.getType() == TYPE_SUB) {
             if (FRAG_TYPE_MARKET_PRICE == menu.getType()) {
-                listener.onSelected(MainActivity.FRAG_TYPE_MARKET_PRICE, position);
+                listener.onSelected(menu.getFragType(), position-1);
 
             } else if (FRAG_TYPE_TALK == menu.getType()) {
-                listener.onSelected(MainActivity.FRAG_TYPE_TALK, position);
+                listener.onSelected(menu.getFragType(), position-2);
 
             } else if (FRAG_TYPE_COIN_CALCULATOR == menu.getType()) {
-                listener.onSelected(MainActivity.FRAG_TYPE_COIN_CALCULATOR, position);
+                listener.onSelected(menu.getFragType(), position-3);
             }
         }
     }
 
-    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcPriceRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
+    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
 
         @Override
         public void onItemClick(View view, int position, Menu menu) {
@@ -356,64 +205,6 @@ public class DrawerMenuFragment extends QcBaseLifeFragment {
     };
 
 
-    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcTalkRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
-
-        @Override
-        public void onItemClick(View view, int position, Menu menu) {
-            QcToast.getInstance().show("onItemClick == " + menu.toString());
-            moveFragment(view, position, menu);
-        }
-
-        @Override
-        public void onItemLongClick(View view, int position, Menu menu) {
-
-        }
-
-        @Override
-        public void onItemCheck(boolean checked, int position, Menu menu) {
-
-        }
-
-        @Override
-        public void onDeleteItem(int itemPosition, Menu menu) {
-
-        }
-
-        @Override
-        public void onReload() {
-
-        }
-    };
-
-
-    private QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu> qcCalculatorRecyclerItemListener = new QcRecyclerBaseAdapter.QcRecyclerItemListener<Menu>() {
-
-        @Override
-        public void onItemClick(View view, int position, Menu menu) {
-            QcToast.getInstance().show("onItemClick == " + menu.toString());
-            moveFragment(view, position, menu);
-        }
-
-        @Override
-        public void onItemLongClick(View view, int position, Menu menu) {
-
-        }
-
-        @Override
-        public void onItemCheck(boolean checked, int position, Menu menu) {
-
-        }
-
-        @Override
-        public void onDeleteItem(int itemPosition, Menu menu) {
-
-        }
-
-        @Override
-        public void onReload() {
-
-        }
-    };
 
 
 }
