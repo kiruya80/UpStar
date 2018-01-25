@@ -7,23 +7,24 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/p150"
-        android:gravity="center"
         android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/p100"
             android:layout_height="@dimen/p100"
-            tools:background="@mipmap/ic_bitcoin"
-            android:layout_marginLeft="@dimen/p100"  />
+            android:layout_marginLeft="@dimen/p100"
+            tools:background="@drawable/ic_bitcoin" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nanumsquare_l"
             android:layout_marginLeft="@dimen/p50"
             android:layout_weight="1"
+            android:fontFamily="@font/nanumsquare_l"
+            android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/p60"
             tools:text="name" />
 

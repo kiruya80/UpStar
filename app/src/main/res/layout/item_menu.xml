@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/p1"
             android:layout_marginTop="@dimen/p50"
-            android:background="@color/color_light_gray" />
+            android:background="@color/colorDivider" />
 
         <LinearLayout
             android:id="@+id/titleRoot"
@@ -29,7 +29,7 @@
                 android:layout_marginLeft="@dimen/p50"
                 android:layout_weight="1"
                 android:fontFamily="@font/nanumsquare_r"
-                android:textColor="@color/color_black"
+                android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/p60"
                 tools:text="@string/menu_market_price" />
 
@@ -64,6 +64,7 @@
                 android:layout_marginLeft="@dimen/p50"
                 android:layout_weight="1"
                 android:fontFamily="@font/nanumsquare_l"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/p60"
                 tools:text="name" />
 

@@ -46,6 +46,7 @@
                             android:gravity="left"
                             android:layout_marginLeft="@dimen/p20"
                             android:fontFamily="@font/nanumsquare_r"
+                            android:textColor="@color/colorPrimaryText"
                             android:text="에이다 (ADA)"
                             android:textSize="@dimen/p150" />
                     </LinearLayout>
