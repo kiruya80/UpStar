@@ -12,15 +12,35 @@ import java.util.List;
  */
 public class Menu extends QcBaseItem {
     private int fragType;
-    private String name;
-    private int imgUrl;
+    private int subIndex;
 
-    public Menu(int type, int fragType, String name, int imgUrl) {
+    private String name;
+    private String imgUrl;
+    private int imgResourceId;
+
+    public Menu(int type, int fragType, String name, String imgUrl) {
         super();
         this.type = type;
         this.fragType = fragType;
         this.name = name;
         this.imgUrl = imgUrl;
+    }
+
+    public Menu(int type, int fragType, String name, int imgResourceId) {
+        super();
+        this.type = type;
+        this.fragType = fragType;
+        this.name = name;
+        this.imgResourceId = imgResourceId;
+    }
+
+    public Menu(int type, int fragType, int subIndex, String name, int imgResourceId) {
+        super();
+        this.type = type;
+        this.fragType = fragType;
+        this.subIndex = subIndex;
+        this.name = name;
+        this.imgResourceId = imgResourceId;
     }
 
     public int getFragType() {
@@ -39,20 +59,38 @@ public class Menu extends QcBaseItem {
         this.name = name;
     }
 
-    public int getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(int imgUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public int getImgResourceId() {
+        return imgResourceId;
+    }
+
+    public void setImgResourceId(int imgResourceId) {
+        this.imgResourceId = imgResourceId;
+    }
+
+    public int getSubIndex() {
+        return subIndex;
+    }
+
+    public void setSubIndex(int subIndex) {
+        this.subIndex = subIndex;
     }
 
     @Override
     public String toString() {
         return "Menu{" +
                 "fragType=" + fragType +
+                ", subIndex=" + subIndex +
                 ", name='" + name + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
+                ", imgResourceId=" + imgResourceId +
                 '}';
     }
 }

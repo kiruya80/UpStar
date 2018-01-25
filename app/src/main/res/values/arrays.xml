@@ -19,14 +19,14 @@
         <item>@string/str_calculator</item>
     </string-array>
     <array name="menu_coin_calculator_sub_img">
-        <item>@drawable/ic_bitfinex</item>
+        <item>@drawable/ic_bitcoin</item>
     </array>
 
     <string-array name="menu_talk_sub">
         <item>@string/str_all</item>
     </string-array>
     <array name="menu_talk_sub_img">
-        <item>@drawable/ic_bitfinex</item>
+        <item>@drawable/ic_bitcoin</item>
     </array>
 
 </resources>

@@ -1,18 +1,16 @@
 
-package com.ulling.upstar.main.view;
+package com.ulling.upstar.view;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentMarketPriceBinding;
-import com.ulling.upstar.main.adapter.MenuAdapter;
+import com.ulling.upstar.view.adapter.MenuAdapter;
 import com.ulling.upstar.model.Menu;
 
 import java.util.ArrayList;
@@ -47,6 +45,8 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
     public void setSubType(int subType) {
     }
 
+    public void setSubType(Menu menu) {
+    }
     @Override
     protected void needInitToOnCreate() {
 //        resetMenuData();
@@ -99,7 +99,7 @@ public class MarketPriceFragment extends QcBaseLifeFragment {
 
     @Override
     protected void needSubscribeUiFromViewModel() {
-        menuAdapter.addAll(menuItems);
+//        menuAdapter.addAll(menuItems);
 
     }
 

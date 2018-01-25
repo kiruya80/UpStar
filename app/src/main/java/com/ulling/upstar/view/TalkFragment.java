@@ -1,12 +1,11 @@
-package com.ulling.upstar.main.view;
+package com.ulling.upstar.view;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentTalkBinding;
+import com.ulling.upstar.model.Menu;
 
 /**
  * 메뉴
@@ -32,6 +31,8 @@ public class TalkFragment extends QcBaseLifeFragment {
     public void setSubType(int subType) {
     }
 
+    public void setSubType(Menu menu) {
+    }
     @Override
     protected void needInitToOnCreate() {
 

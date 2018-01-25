@@ -1,6 +1,5 @@
-package com.ulling.upstar.main.adapter;
+package com.ulling.upstar.view.adapter;
 
-import android.animation.ValueAnimator;
 import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
@@ -11,7 +10,8 @@ import com.ulling.lib.core.entities.QcBaseItem;
 import com.ulling.lib.core.viewutil.adapter.QcBaseViewHolder;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
-import com.ulling.upstar.main.viewholder.MenuViewHolder;
+import com.ulling.upstar.view.viewholder.MenuViewHolder;
+import com.ulling.upstar.manager.ImageManager;
 import com.ulling.upstar.model.Menu;
 
 import java.util.ArrayList;
@@ -113,20 +113,22 @@ public class MenuAdapter extends QcRecyclerBaseAdapter<Menu> {
                         }
                     });
 
-                    menuViewHolder.viewBinding.img.setImageResource(menuViewHolder.item.getImgUrl());
+                    if (menuViewHolder.item.getImgUrl() != null && !"".equals(menuViewHolder.item.getImgUrl())) {
+                        ImageManager.getInstance()
+                                .setImage(qCon,
+                                        menuViewHolder.item.getImgUrl(),
+                                        R.mipmap.ic_launcher_round,
+                                        R.mipmap.ic_launcher_round,
+                                        menuViewHolder.viewBinding.img);
 
-//            Glide.with(qCon)
-//                    .load(url)
-//                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-//                    .error(defaultImageResource)
-//                    .placeholder(defaultImageResource)
-//                    .dontAnimate()
-//                    .into(view);
+                    } else {
+                        menuViewHolder.viewBinding.img.setImageResource(menuViewHolder.item.getImgResourceId());
+                    }
+
                 } else {
                     menuViewHolder.viewBinding.subRoot.setVisibility(View.GONE);
                 }
             }
-
         }
     }
 

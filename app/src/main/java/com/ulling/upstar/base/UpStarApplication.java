@@ -6,6 +6,8 @@ import com.ulling.lib.core.base.QcBaseApplication;
 import com.ulling.lib.core.util.QcPreferences;
 import com.ulling.lib.core.util.QcToast;
 import com.ulling.upstar.R;
+import com.ulling.upstar.manager.ImageManager;
+import com.ulling.upstar.manager.MenuManager;
 
 /**
  * Created by KILHO on 2018. 1. 14..
@@ -40,6 +42,8 @@ public class UpStarApplication extends QcBaseApplication {
 //        MyVolley.init(this);
         QcPreferences.getInstance().getAPP_NAME();
         QcToast.getInstance().show("Start App : " + QcPreferences.getInstance().getAPP_NAME(), false);
+        ImageManager.getInstance().initGlideSet(true, true, false);
+        MenuManager.getInstance(qCon).setMenuData();
     }
 
     public static synchronized UpStarApplication getInstance() {

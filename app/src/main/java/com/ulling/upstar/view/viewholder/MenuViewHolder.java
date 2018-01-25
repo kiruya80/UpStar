@@ -1,4 +1,4 @@
-package com.ulling.upstar.main.viewholder;
+package com.ulling.upstar.view.viewholder;
 
 import android.databinding.ViewDataBinding;
 
