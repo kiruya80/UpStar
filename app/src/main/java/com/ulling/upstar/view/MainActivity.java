@@ -85,19 +85,14 @@ public class MainActivity extends QcBaseLifeActivity {
 //        }
 
         menuItems = MenuManager.getInstance(qCon).setMenuData();
-
         setSupportActionBar(viewBinding.includedAppBarMain.toolbar);
         actionBar = getSupportActionBar();
-
 
         viewBinding.drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, viewBinding.drawerLayout, viewBinding.includedAppBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         viewBinding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-//        viewBinding.navView.setNavigationItemSelectedListener(this);
-//        setNavigationMenu();
 
         mDrawerMenuFragment = DrawerMenuFragment.getInstance(viewBinding.drawerLayout);
         mDrawerMenuFragment.setListener(new DrawerMenuFragment.OnMenuListener() {
@@ -116,7 +111,27 @@ public class MainActivity extends QcBaseLifeActivity {
                 R.id.frameDrawer,
                 DrawerMenuFragment.class.getSimpleName());
 
+        if (menuItems != null && menuItems.size() > 1)
         setFragment(menuItems.get(1));
+    }
+
+    @Override
+    protected void needUIEventListener() {
+    }
+
+    @Override
+    protected void needSubscribeUiFromViewModel() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            if (QcBackPressClose.getInstance().isBackPress(qCon.getString(R.string.app_name))) {
+                super.onBackPressed();
+            }
+        }
     }
 
     public void setToolBar(int type, String title) {
@@ -137,25 +152,6 @@ public class MainActivity extends QcBaseLifeActivity {
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) viewBinding.includedAppBarMain.appBarLayout.getLayoutParams();
             lp.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT;
 //            lp.height = viewBinding.includedAppBarMain.toolbar.getHeight() + QcUtils.getStatusBarHeight(qCon);
-        }
-    }
-
-    @Override
-    protected void needUIEventListener() {
-    }
-
-    @Override
-    protected void needSubscribeUiFromViewModel() {
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (viewBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            viewBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            if (QcBackPressClose.getInstance().isBackPress(qCon.getString(R.string.app_name))) {
-                super.onBackPressed();
-            }
         }
     }
 
