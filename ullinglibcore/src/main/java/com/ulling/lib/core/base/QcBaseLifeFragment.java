@@ -22,10 +22,10 @@ import com.ulling.lib.core.util.QcLog;
  */
 //public abstract class QcBaseLifeFragment extends LifecycleFragment {
 public abstract class QcBaseLifeFragment extends Fragment {
+    public String TAG = getClass().getSimpleName();
     public Context qCon;
     public String APP_NAME;
     public boolean fragStrt = false;
-    public String TAG = getClass().getSimpleName();
     public android.support.v7.widget.Toolbar toolbar;
     public ActionBar actionBar;
 

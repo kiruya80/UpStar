@@ -7,9 +7,18 @@ import com.ulling.upstar.base.BaseViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * Created by KILHO on 2018. 1. 20..
  */
+@ToString
+@Getter
+@Setter
+@Data
 public class Menu extends QcBaseItem {
     private int fragType;
     private int subIndex;
@@ -41,56 +50,5 @@ public class Menu extends QcBaseItem {
         this.subIndex = subIndex;
         this.name = name;
         this.imgResourceId = imgResourceId;
-    }
-
-    public int getFragType() {
-        return fragType;
-    }
-
-    public void setFragType(int fragType) {
-        this.fragType = fragType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public int getImgResourceId() {
-        return imgResourceId;
-    }
-
-    public void setImgResourceId(int imgResourceId) {
-        this.imgResourceId = imgResourceId;
-    }
-
-    public int getSubIndex() {
-        return subIndex;
-    }
-
-    public void setSubIndex(int subIndex) {
-        this.subIndex = subIndex;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "fragType=" + fragType +
-                ", subIndex=" + subIndex +
-                ", name='" + name + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", imgResourceId=" + imgResourceId +
-                '}';
     }
 }

@@ -44,7 +44,13 @@
         <item name="android:textSize">@dimen/p70</item>
         <item name="android:textColor">@color/color_white</item>
         <item name="android:fontFamily">@font/nanumsquare_r</item>
-
     </style>
 
+    <style name="AppDialog" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

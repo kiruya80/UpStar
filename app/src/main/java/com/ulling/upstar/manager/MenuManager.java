@@ -48,7 +48,7 @@ public class MenuManager {
 
         Menu titleCalculator = new Menu(MenuAdapter.TYPE_TITLE, FRAG_TYPE_COIN_CALCULATOR, qCon.getResources().getString(R.string.menu_coin_calculator), 0);
         String[] menu_coin_calculator_sub = qCon.getResources().getStringArray(R.array.menu_coin_calculator_sub);
-        TypedArray typedArray3 = qCon.getResources().obtainTypedArray(R.array.menu_talk_sub_img);
+        TypedArray typedArray3 = qCon.getResources().obtainTypedArray(R.array.menu_coin_calculator_sub_img);
         getMenuData(titleCalculator, menu_coin_calculator_sub, typedArray3);
 
         return menuItems;

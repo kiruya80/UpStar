@@ -1,5 +1,6 @@
 package com.ulling.upstar.view;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * 메인화면
  */
-public class MainActivity extends QcBaseLifeActivity {
+public class MainActivity extends QcBaseLifeActivity implements AppBarLayout.OnOffsetChangedListener {
 
     public static final int FRAG_TYPE_MARKET_PRICE = 1;
     public static final int FRAG_TYPE_TALK = 2;
@@ -87,6 +88,8 @@ public class MainActivity extends QcBaseLifeActivity {
         menuItems = MenuManager.getInstance(qCon).setMenuData();
         setSupportActionBar(viewBinding.includedAppBarMain.toolbar);
         actionBar = getSupportActionBar();
+        viewBinding.includedAppBarMain.toolbar.setNavigationIcon(null);
+        viewBinding.includedAppBarMain.toolbar.setTitle(null);
 
         viewBinding.drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -121,6 +124,7 @@ public class MainActivity extends QcBaseLifeActivity {
 
     @Override
     protected void needSubscribeUiFromViewModel() {
+        viewBinding.includedAppBarMain.appBarLayout.addOnOffsetChangedListener(this);
     }
 
     @Override
@@ -134,18 +138,33 @@ public class MainActivity extends QcBaseLifeActivity {
         }
     }
 
-    public void setToolBar(int type, String title) {
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+
+//        handleAlphaOnTitle(percentage);
+//        handleToolbarTitleVisibility(percentage);
+    }
+
+
+    public void setToolBar(int type, String title, int img) {
         if (type == ACTIONBAR_LONG) {
             viewBinding.includedAppBarMain.rlToolbarLay.setVisibility(View.GONE);
             viewBinding.includedAppBarMain.imageCollapsingToolbar.setVisibility(View.VISIBLE);
             viewBinding.includedAppBarMain.collapsingToolbarLayout.setTitle(title);
 
+            if (img != 0)
+            viewBinding.includedAppBarMain.imageCollapsingToolbar.setImageResource(img);
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) viewBinding.includedAppBarMain.appBarLayout.getLayoutParams();
             lp.height = (int) heightDp;
 
 
         } else {
             viewBinding.includedAppBarMain.rlToolbarLay.setVisibility(View.VISIBLE);
+            if (img != 0)
+            viewBinding.includedAppBarMain.imageToolbar.setImageResource(img);
+
             viewBinding.includedAppBarMain.imageCollapsingToolbar.setVisibility(View.GONE);
             viewBinding.includedAppBarMain.toolbarTitle.setText(title);
 
@@ -169,7 +188,7 @@ public class MainActivity extends QcBaseLifeActivity {
                     marketPriceFragment,
                     R.id.frameContainer,
                     marketPriceFragment.getFragmentTag());
-            setToolBar(ACTIONBAR_LONG, menu.getName());
+            setToolBar(ACTIONBAR_LONG, menu.getName(), menu.getImgResourceId());
 
         } else if (menu.getFragType() == FRAG_TYPE_TALK) {
             talkFragment.setSubType(menu);
@@ -178,7 +197,7 @@ public class MainActivity extends QcBaseLifeActivity {
                     talkFragment,
                     R.id.frameContainer,
                     talkFragment.getFragmentTag());
-            setToolBar(ACTIONBAR_SHORT, menu.getName());
+            setToolBar(ACTIONBAR_SHORT, menu.getName(), menu.getImgResourceId());
 
         } else if (menu.getFragType() == FRAG_TYPE_COIN_CALCULATOR) {
             coinCalculatorFragment.setSubType(menu);
@@ -187,7 +206,7 @@ public class MainActivity extends QcBaseLifeActivity {
                     coinCalculatorFragment,
                     R.id.frameContainer,
                     coinCalculatorFragment.getFragmentTag());
-            setToolBar(ACTIONBAR_SHORT, menu.getName());
+            setToolBar(ACTIONBAR_SHORT, menu.getName(), menu.getImgResourceId());
 
         }
     }
