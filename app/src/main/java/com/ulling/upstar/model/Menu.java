@@ -1,13 +1,9 @@
 package com.ulling.upstar.model;
 
 import com.ulling.lib.core.entities.QcBaseItem;
-import com.ulling.upstar.R;
-import com.ulling.upstar.base.BaseViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +14,8 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-@Data
+@Data /* 아래 코드 추가 */
+@EqualsAndHashCode(callSuper=false)
 public class Menu extends QcBaseItem {
     private int fragType;
     private int subIndex;

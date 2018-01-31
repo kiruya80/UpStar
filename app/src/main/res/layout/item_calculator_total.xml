@@ -18,41 +18,41 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/p50"
-                android:layout_marginTop="@dimen/p50"
+                android:layout_marginBottom="@dimen/p30"
+                android:layout_marginTop="@dimen/p30"
                 android:fontFamily="@font/nanumsquare_r"
                 android:gravity="center"
-                android:text="123,123,123원"
+                android:text="11,123,123,123원"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/p180" />
+                android:textSize="@dimen/p155" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/p100"
+                android:layout_marginLeft="@dimen/p50"
+                android:layout_marginRight="@dimen/p50"
+                android:layout_marginTop="@dimen/p50"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/txtCal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
                     android:fontFamily="@font/nanumsquare_r"
                     android:text="수익률"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/p80" />
+                    android:textSize="@dimen/p60" />
 
                 <TextView
                     android:id="@+id/txtCalNum"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumsquare_r"
                     android:gravity="center|right"
                     android:text="+ 300%"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/p80" />
+                    android:textSize="@dimen/p60" />
 
             </LinearLayout>
 
@@ -60,28 +60,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/p50"
+                android:layout_marginRight="@dimen/p50"
+                android:layout_marginTop="@dimen/p20"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/p30"
                     android:fontFamily="@font/nanumsquare_r"
                     android:text="평가손익"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/p80" />
+                    android:textSize="@dimen/p60" />
 
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumsquare_r"
                     android:gravity="center|right"
                     android:text="-123,456원"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/p80" />
+                    android:textSize="@dimen/p60" />
 
             </LinearLayout>
 
@@ -90,37 +90,94 @@
                 android:id="@+id/layInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/p50"
+                android:layout_marginRight="@dimen/p50"
+                android:layout_marginTop="@dimen/p20"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
-                    android:fontFamily="@font/nanumsquare_r"
-                    android:text="보유수량 123 ADA"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/p60" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
-                    android:fontFamily="@font/nanumsquare_r"
-                    android:gravity="center|right"
-                    android:text="매수금액 123원"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/p60" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:text="보유수량"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/p60" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:gravity="center|right"
+                        android:text="123 ADA"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/p60" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/p30"
-                    android:fontFamily="@font/nanumsquare_r"
-                    android:gravity="center|right"
-                    android:text="매수평균가 123원"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/p60" />
+                    android:layout_marginTop="@dimen/p20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:text="매수금액"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/p60" />
+
+                    <TextView
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:gravity="center|right"
+                        android:text="123원"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/p60" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/p20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:text="매수평균가"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/p60" />
+
+                    <TextView
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:gravity="center|right"
+                        android:text="123원"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/p60" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnBuySellHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="거래내역" />
 
             </LinearLayout>
 
@@ -137,6 +194,7 @@
                     android:layout_marginRight="@dimen/p30"
                     android:background="@drawable/ic_expand_more"
                     android:foreground="?android:attr/selectableItemBackground" />
+
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

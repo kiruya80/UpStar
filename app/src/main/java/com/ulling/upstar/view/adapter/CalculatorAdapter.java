@@ -4,25 +4,22 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 
 import com.ulling.lib.core.entities.QcBaseItem;
 import com.ulling.lib.core.listener.OnSingleClickListener;
+import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.viewutil.adapter.QcBaseViewHolder;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
-import com.ulling.upstar.manager.ImageManager;
 import com.ulling.upstar.model.CoinCalculator;
-import com.ulling.upstar.model.Menu;
 import com.ulling.upstar.view.viewholder.CalculatorViewHolder;
-import com.ulling.upstar.view.viewholder.MenuViewHolder;
 
 import java.util.ArrayList;
 
 /**
  *
  */
-public class CalculatorAdapter extends QcRecyclerBaseAdapter<Menu> {
+public class CalculatorAdapter extends QcRecyclerBaseAdapter<CoinCalculator> {
     public static final int TYPE_TOP = 1;
     public static final int TYPE_SUB = 2;
 
@@ -66,37 +63,52 @@ public class CalculatorAdapter extends QcRecyclerBaseAdapter<Menu> {
             final CalculatorViewHolder calculatorViewHolder = (CalculatorViewHolder) holder;
 
             calculatorViewHolder.item = (CoinCalculator) item;
+            QcLog.e("itemList  ==" + itemList.size() + " , " + position);
+
             if (calculatorViewHolder.item.getType() == TYPE_TOP) {
                 calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.GONE);
 
-                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnConfirm.setOnClickListener(new OnSingleClickListener() {
+                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnSell.setOnClickListener(new OnSingleClickListener() {
                     @Override
                     public void onSingleClick(View v) {
-                        itemOpened[position] = true;
-                        if (itemOpened[position]) {
-
-                        } else {
-
+                        if (itemList != null && itemList.size() > 1) {
+                            calculatorViewHolder.item.setType(TYPE_SUB);
+                            itemList.remove(position);
+                            notifyItemRemoved(position);
                         }
                     }
                 });
-                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnCancle.setOnClickListener(new OnSingleClickListener() {
+                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnBuy.setOnClickListener(new OnSingleClickListener() {
                     @Override
                     public void onSingleClick(View v) {
-                        notifyItemRemoved(position);
+                        if (itemList != null && itemList.size() > 0) {
+                            calculatorViewHolder.item.setType(TYPE_SUB);
+                            CoinCalculator mCoinCalculator = new CoinCalculator();
+                            mCoinCalculator.setType(CalculatorAdapter.TYPE_TOP);
+                            itemList.add(mCoinCalculator);
+                            notifyItemInserted(position + 1);
+                        }
                     }
                 });
 
-
-            } else if (calculatorViewHolder.item.getType() == TYPE_SUB) {
+            } else {
                 calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.VISIBLE);
                 calculatorViewHolder.viewBinding.includedItemCalculatorResult.btnCancle.setOnClickListener(new OnSingleClickListener() {
                     @Override
                     public void onSingleClick(View v) {
-                        notifyItemRemoved(position);
+                        if (itemList != null && itemList.size() > 1) {
+                            CoinCalculator mCoinCalculator = new CoinCalculator();
+                            if (qcRecyclerItemListener != null)
+                                qcRecyclerItemListener.onDeleteItem(position, mCoinCalculator);
+                            itemList.remove(position);
+                            notifyItemRemoved(position);
+                        }
                     }
                 });
+
             }
+
+
         }
     }
 

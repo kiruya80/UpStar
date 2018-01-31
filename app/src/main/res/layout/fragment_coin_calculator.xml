@@ -26,39 +26,15 @@
                 android:layout_marginRight="@dimen/p30"
                 android:layout_marginTop="@dimen/p30" />
 
-
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewCalculator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/p30"
                 app:layoutManager="LinearLayoutManager"
                 tools:listitem="@layout/item_calculator"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context=".view.MainActivity" />
-
-            <!--<include-->
-                <!--android:id="@+id/includedItemCalculatorAdd"-->
-                <!--layout="@layout/item_calculator_coin_add"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/p30"-->
-                <!--android:layout_marginRight="@dimen/p30"-->
-                <!--android:layout_marginTop="@dimen/p30" />-->
-
-
-            <!--<include-->
-                <!--android:id="@+id/includedItemCalculatorResult"-->
-                <!--layout="@layout/item_calculator_result"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="@dimen/p30"-->
-                <!--android:visibility="gone" />-->
-
-
         </LinearLayout>
-
 
     </android.support.v4.widget.NestedScrollView>
 </layout>

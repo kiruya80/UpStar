@@ -3,6 +3,7 @@ package com.ulling.upstar.model;
 import com.ulling.lib.core.entities.QcBaseItem;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,8 +15,9 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-@Data
+@Data /* 아래 코드 추가 */
+@EqualsAndHashCode(callSuper=false)
 public class CoinCalculator extends QcBaseItem {
-    private Coin coin;
     private Calculator calculator;
+    private Coin coin;
 }
