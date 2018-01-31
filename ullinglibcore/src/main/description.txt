@@ -32,9 +32,20 @@ http://www.kmshack.kr/2017/03/flexboxlayout-%EB%9C%AF%EC%96%B4%EB%B3%B4%EA%B8%B0
  http://devlibch.blogspot.kr/2016/05/material-design-activity-transition.html
 
 
-Android studio Plug in
-http://bronks.tistory.com/447
 
+### google architecture ###
+https://codelabs.developers.google.com/codelabs/android-lifecycles/#1
+
+https://codelabs.developers.google.com/codelabs/android-persistence/#4
+
+https://developer.android.com/topic/libraries/architecture/livedata.html
+
+### PagedListAdapter ###
+http://androidkt.com/paging-library/
+https://github.com/Thumar/paging-library.git
+
+### Android studio Plug in ###
+http://bronks.tistory.com/447
 
 1. Lombok Plugin
 
