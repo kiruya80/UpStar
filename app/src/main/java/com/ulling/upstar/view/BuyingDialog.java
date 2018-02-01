@@ -39,28 +39,30 @@ public class BuyingDialog extends BaseDialog {
         return R.layout.dialog_calculator_coin_add;
     }
 
-    public BuyingDialog(boolean cancelable, DialogListener listener) {
+    public BuyingDialog(boolean cancelable, String title, DialogListener listener) {
         this.cancelable = cancelable;
+        this.title = title;
+//        setTitle(title);
         setCancelable(cancelable);
         this.listener = listener;
     }
 
-    public static BaseDialog show(Activity activity, boolean cancelable, DialogListener listener) {
-        BuyingDialog dialog = new BuyingDialog(cancelable, listener);
+    public static BaseDialog show(Activity activity, boolean cancelable, String title, DialogListener listener) {
+        BuyingDialog dialog = new BuyingDialog(cancelable, title, listener);
+
         return dialog.show(activity);
     }
 
     @Override
     protected void needUIBinding() {
         viewBinding = (DialogCalculatorCoinAddBinding) getViewDataBinding();
-        viewBinding.btnConfirm.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View v) {
-                QcLog.e("onSingleClick");
-                dismiss();
-            }
-        });
-
+//        viewBinding.btnConfirm.setOnClickListener(new OnSingleClickListener() {
+//            @Override
+//            public void onSingleClick(View v) {
+//                QcLog.e("onSingleClick");
+//                dismiss();
+//            }
+//        });
     }
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

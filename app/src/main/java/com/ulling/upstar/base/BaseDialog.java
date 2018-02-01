@@ -3,6 +3,7 @@ package com.ulling.upstar.base;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -31,6 +32,8 @@ public abstract class BaseDialog extends DialogFragment {
 
     protected abstract int needGetLayoutId();
     protected abstract void needUIBinding();
+    public String title;
+
     public ViewDataBinding getViewDataBinding() {
         return rootViewBinding;
     }
@@ -39,7 +42,6 @@ public abstract class BaseDialog extends DialogFragment {
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppDialog);
 
         setCancelable(true);
-        TAG = this.getClass().getSimpleName();
     }
 
 //        @Override
@@ -62,9 +64,16 @@ public abstract class BaseDialog extends DialogFragment {
         View view = inflater.inflate(needGetLayoutId(), null);
         builder = new AlertDialog.Builder(getActivity());
         setContentView(view);
-        setTitle("title");
+        setTitle(title);
 //        builder.setTitle(getActivity().getString(R.string.sysinfo)).setNeutralButton(
 //                getActivity().getString(R.string.okay), null);
+
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
 
         if (rootViewBinding == null)
             rootViewBinding = DataBindingUtil.inflate(inflater, needGetLayoutId(), null, false);
@@ -75,8 +84,11 @@ public abstract class BaseDialog extends DialogFragment {
 
 
     public void  setTitle(String title) {
+        if (builder != null)
         builder.setTitle(title);
+
     }
+
     public void setContentView(View view) {
         builder.setView(view);
     }

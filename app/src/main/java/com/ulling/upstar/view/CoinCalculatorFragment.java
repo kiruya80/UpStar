@@ -119,7 +119,8 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment {
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(200)
                             .start();
-                viewBinding.nestedScrollView.fullScroll(NestedScrollView.FOCUS_UP);
+//                viewBinding.nestedScrollView.fullScroll(NestedScrollView.FOCUS_UP);
+                    showAlertDialog();
                 } else {
                     viewBinding.includedItemCalculator.layInfo.setVisibility(View.GONE);
 //                    viewBinding.includedItemCalculator.recyclerView.setVisibility(View.GONE);
@@ -128,7 +129,8 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment {
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(200)
                             .start();
-                    viewBinding.nestedScrollView.fullScroll(NestedScrollView.FOCUS_UP);
+//                    viewBinding.nestedScrollView.fullScroll(NestedScrollView.FOCUS_UP);
+                    showAlertDialog();
                 }
             }
         });
@@ -144,7 +146,7 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment {
 
 
     private void showAlertDialog() {
-        BuyingDialog.show(getActivity(), true, new BuyingDialog.DialogListener() {
+        BuyingDialog.show(getActivity(), true, "매수", new BuyingDialog.DialogListener() {
             @Override
             public void onClickOk() {
 
