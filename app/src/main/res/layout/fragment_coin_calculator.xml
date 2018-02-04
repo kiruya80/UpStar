@@ -34,7 +34,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/p130"
+                    android:minHeight="?attr/actionBarSize"
                     android:fontFamily="@font/nanumsquare_r"
                     android:gravity="center"
                     android:text="거래내역"
@@ -53,12 +53,34 @@
                     tools:listitem="@layout/item_calculator_result" />
             </LinearLayout>
 
-            <android.support.v4.app.FragmentTabHost
-                android:id="@+id/tabHost"
+
+
+
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/p30"
-                android:layout_weight="1">
+                android:orientation="vertical">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/layTab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="6dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <android.support.v4.app.FragmentTabHost
+                android:id="@+id/tabHost"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,6 +116,8 @@
                         android:layout_height="match_parent" />
                 </LinearLayout>
             </android.support.v4.app.FragmentTabHost>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

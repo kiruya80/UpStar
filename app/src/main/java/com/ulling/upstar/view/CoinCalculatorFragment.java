@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.ulling.upstar.model.CoinCalculator;
 import com.ulling.upstar.model.CoinPriceRatio;
 import com.ulling.upstar.model.Menu;
 import com.ulling.upstar.view.adapter.CalculatorAdapter;
+import com.ulling.upstar.view.adapter.TabPagerAdapter;
 
 import java.util.ArrayList;
 
@@ -38,8 +41,8 @@ import java.util.ArrayList;
  */
 public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHost.OnTabChangeListener {
 
-    public static final String TAB_TYPE_01 = "TAB_TYPE_01";
-    public static final String TAB_TYPE_02 = "TAB_TYPE_02";
+    public static final String TAB_TYPE_BUY = "TAB_TYPE_BUY";
+    public static final String TAB_TYPE_SELL = "TAB_TYPE_02";
 
     private FragmentCoinCalculatorBinding viewBinding;
     private boolean isInfoView = false;
@@ -50,6 +53,7 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
     private ArrayList<CoinCalculator> coinCalculators;
     private BuyCoinFragment mBuyCoinFragment;
     private SellCoinFragment mSellCoinFragment;
+    private TabPagerAdapter mTabPagerAdapter;
 
 
     public CoinCalculatorFragment() {
@@ -129,32 +133,62 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
         mBuyCoinFragment = new BuyCoinFragment();
         mSellCoinFragment = new SellCoinFragment();
 
-        viewBinding.tabHost.setOnTabChangedListener(this);
-//        setupTabs();
 
-        // http://stex.tistory.com/35
-        viewBinding.tabHost.setup(qCon, getChildFragmentManager(), R.id.content);
-        TabHost.TabSpec tabSpec1 = viewBinding.tabHost.newTabSpec(TAB_TYPE_01);
-        tabSpec1.setIndicator(getResources().getString(R.string.str_sell));
-        tabSpec1.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_sell), R.drawable.bg_rounded_pink));
-        viewBinding.tabHost.addTab(tabSpec1, BuyCoinFragment.class, null);
 
-        TabHost.TabSpec tabSpec2 = viewBinding.tabHost.newTabSpec(TAB_TYPE_02);
-        tabSpec2.setIndicator(getResources().getString(R.string.str_buy));
-        tabSpec2.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_buy), R.drawable.bg_rounded_blue));
-        viewBinding.tabHost.addTab(tabSpec2, SellCoinFragment.class, null);
+        viewBinding.layTab.addTab(viewBinding.layTab.newTab().setText("Tab 1"));
+        viewBinding.layTab.addTab(viewBinding.layTab.newTab().setText("Tab 2"));
+        viewBinding.layTab.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        setTabColor(TAB_TYPE_01);
+        mTabPagerAdapter = new TabPagerAdapter     (getChildFragmentManager(), viewBinding.layTab.getTabCount());
+        viewBinding.pager.setAdapter(mTabPagerAdapter);
+        viewBinding.pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(viewBinding.layTab));
 
-        viewBinding.tabHost.getTabWidget().setShowDividers(TabWidget.SHOW_DIVIDER_MIDDLE);
-        viewBinding.tabHost.getTabWidget().setDividerDrawable(R.drawable.bg_tab_driver);
-        viewBinding.tabHost.setCurrentTab(mCurrentTab);
+        viewBinding.layTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                mTabPagerAdapter.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
+//        viewBinding.tabHost.setOnTabChangedListener(this);
+////        setupTabs();
+//
+//        // http://stex.tistory.com/35
+//        viewBinding.tabHost.setup(qCon, getChildFragmentManager(), R.id.content);
+//        TabHost.TabSpec tabSpec1 = viewBinding.tabHost.newTabSpec(TAB_TYPE_BUY);
+//        tabSpec1.setIndicator(getResources().getString(R.string.str_sell));
+//        tabSpec1.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_sell), R.drawable.bg_rounded_pink));
+//        viewBinding.tabHost.addTab(tabSpec1, BuyCoinFragment.class, null);
+//
+//        TabHost.TabSpec tabSpec2 = viewBinding.tabHost.newTabSpec(TAB_TYPE_SELL);
+//        tabSpec2.setIndicator(getResources().getString(R.string.str_buy));
+//        tabSpec2.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_buy), R.drawable.bg_rounded_blue));
+//        viewBinding.tabHost.addTab(tabSpec2, SellCoinFragment.class, null);
+//
+//        setTabColor(TAB_TYPE_BUY);
+//
+//        viewBinding.tabHost.getTabWidget().setShowDividers(TabWidget.SHOW_DIVIDER_MIDDLE);
+//        viewBinding.tabHost.getTabWidget().setDividerDrawable(R.drawable.bg_tab_driver);
+//        viewBinding.tabHost.setCurrentTab(mCurrentTab);
     }
 
     private void setupTabs() {
         viewBinding.tabHost.setup(qCon, getChildFragmentManager(), android.R.id.tabcontent);// important!
-        viewBinding.tabHost.addTab(newTab(TAB_TYPE_01, R.string.str_sell, R.id.buyContent));
-        viewBinding.tabHost.addTab(newTab(TAB_TYPE_02, R.string.str_buy, R.id.sellContent));
+        viewBinding.tabHost.addTab(newTab(TAB_TYPE_BUY, R.string.str_sell, R.id.buyContent));
+        viewBinding.tabHost.addTab(newTab(TAB_TYPE_SELL, R.string.str_buy, R.id.sellContent));
     }
 
     private TabHost.TabSpec newTab(String tag, int labelId, int tabContentId) {
@@ -176,18 +210,18 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
             View background = (View) viewBinding.tabHost.getTabWidget().getChildAt(i);
             if (i == viewBinding.tabHost.getCurrentTab()) {
                 tv.setTextColor(getResources().getColor(R.color.color_white));
-                if (TAB_TYPE_01.equals(tabId)) {
+                if (TAB_TYPE_BUY.equals(tabId)) {
                     background.setBackgroundColor(getResources().getColor(R.color.color_pink_500));
                     background.setBackgroundResource(R.drawable.bg_rounded_pink);
-                } else if (TAB_TYPE_02.equals(tabId)) {
+                } else if (TAB_TYPE_SELL.equals(tabId)) {
                     background.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     background.setBackgroundResource(R.drawable.bg_rounded_blue);
                 }
             } else {
-                if (TAB_TYPE_01.equals(tabId)) {
+                if (TAB_TYPE_BUY.equals(tabId)) {
                     tv.setTextColor(getResources().getColor(R.color.colorAccent));
                     background.setBackgroundResource(R.drawable.bg_rounded_blue_stroke);
-                } else if (TAB_TYPE_02.equals(tabId)) {
+                } else if (TAB_TYPE_SELL.equals(tabId)) {
                     tv.setTextColor(getResources().getColor(R.color.color_pink_500));
                     background.setBackgroundResource(R.drawable.bg_rounded_pink_stroke);
                 }
@@ -200,10 +234,10 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
     public void onTabChanged(String tabId) {
         QcLog.e("onTabChanged == " + tabId);
         setTabColor(tabId);
-        if (TAB_TYPE_01.equals(tabId)) {
+        if (TAB_TYPE_BUY.equals(tabId)) {
             updateTab(tabId, R.id.buyContent);
             mCurrentTab = 0;
-        } else if (TAB_TYPE_02.equals(tabId)) {
+        } else if (TAB_TYPE_SELL.equals(tabId)) {
             updateTab(tabId, R.id.sellContent);
             mCurrentTab = 1;
         }
@@ -212,9 +246,9 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
         FragmentManager fm = getFragmentManager();
         QcBaseLifeFragment mQcBaseLifeFragment = null;
         if (fm.findFragmentByTag(tabId) == null) {
-            if (TAB_TYPE_01.equals(tabId)) {
+            if (TAB_TYPE_BUY.equals(tabId)) {
                 mQcBaseLifeFragment = SellCoinFragment.getInstance();
-            } else if (TAB_TYPE_02.equals(tabId)) {
+            } else if (TAB_TYPE_SELL.equals(tabId)) {
                 mQcBaseLifeFragment = BuyCoinFragment.getInstance();
             }
             fm.beginTransaction()
