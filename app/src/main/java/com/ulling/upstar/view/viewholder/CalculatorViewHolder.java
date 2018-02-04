@@ -10,12 +10,12 @@ import com.ulling.upstar.model.CoinCalculator;
  * Created by KILHO on 2018. 1. 21..
  */
 public class CalculatorViewHolder extends QcBaseViewHolder {
-    public ItemCalculatorBinding viewBinding;
+//    public ItemCalculatorBinding viewBinding;
     public CoinCalculator item;
 
     public CalculatorViewHolder(ViewDataBinding binding) {
         super(binding);
-        viewBinding = (ItemCalculatorBinding) getBinding();
+//        viewBinding = (ItemCalculatorBinding) getBinding();
     }
 
 }

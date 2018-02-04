@@ -46,7 +46,7 @@ public class CalculatorAdapter extends QcRecyclerBaseAdapter<CoinCalculator> {
 
     @Override
     protected int needLayoutIdFromItemViewType(int viewType) {
-        return R.layout.item_calculator;
+        return R.layout.item_calculator_result;
     }
 
     @Override
@@ -60,55 +60,51 @@ public class CalculatorAdapter extends QcRecyclerBaseAdapter<CoinCalculator> {
     @Override
     protected void needUICustomBinding(int viewType, QcBaseViewHolder holder, final int position, QcBaseItem item) {
         if (holder instanceof CalculatorViewHolder) {
-            final CalculatorViewHolder calculatorViewHolder = (CalculatorViewHolder) holder;
-
-            calculatorViewHolder.item = (CoinCalculator) item;
-            QcLog.e("itemList  ==" + itemList.size() + " , " + position);
-
-            if (calculatorViewHolder.item.getType() == TYPE_TOP) {
-                calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.GONE);
-
-                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnSell.setOnClickListener(new OnSingleClickListener() {
-                    @Override
-                    public void onSingleClick(View v) {
-                        if (itemList != null && itemList.size() > 1) {
-                            calculatorViewHolder.item.setType(TYPE_SUB);
-                            itemList.remove(position);
-                            notifyItemRemoved(position);
-                        }
-                    }
-                });
-                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnBuy.setOnClickListener(new OnSingleClickListener() {
-                    @Override
-                    public void onSingleClick(View v) {
-                        if (itemList != null && itemList.size() > 0) {
-                            calculatorViewHolder.item.setType(TYPE_SUB);
-                            CoinCalculator mCoinCalculator = new CoinCalculator();
-                            mCoinCalculator.setType(CalculatorAdapter.TYPE_TOP);
-                            itemList.add(mCoinCalculator);
-                            notifyItemInserted(position + 1);
-                        }
-                    }
-                });
-
-            } else {
-                calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.VISIBLE);
-                calculatorViewHolder.viewBinding.includedItemCalculatorResult.btnCancle.setOnClickListener(new OnSingleClickListener() {
-                    @Override
-                    public void onSingleClick(View v) {
-                        if (itemList != null && itemList.size() > 1) {
-                            CoinCalculator mCoinCalculator = new CoinCalculator();
-                            if (qcRecyclerItemListener != null)
-                                qcRecyclerItemListener.onDeleteItem(position, mCoinCalculator);
-                            itemList.remove(position);
-                            notifyItemRemoved(position);
-                        }
-                    }
-                });
-
-            }
-
-
+//            final CalculatorViewHolder calculatorViewHolder = (CalculatorViewHolder) holder;
+//            calculatorViewHolder.item = (CoinCalculator) item;
+//            QcLog.e("itemList  ==" + itemList.size() + " , " + position);
+//            if (calculatorViewHolder.item.getType() == TYPE_TOP) {
+//                calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.GONE);
+//
+//                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnSell.setOnClickListener(new OnSingleClickListener() {
+//                    @Override
+//                    public void onSingleClick(View v) {
+//                        if (itemList != null && itemList.size() > 1) {
+//                            calculatorViewHolder.item.setType(TYPE_SUB);
+//                            itemList.remove(position);
+//                            notifyItemRemoved(position);
+//                        }
+//                    }
+//                });
+//                calculatorViewHolder.viewBinding.includedItemCalculatorAdd.btnBuy.setOnClickListener(new OnSingleClickListener() {
+//                    @Override
+//                    public void onSingleClick(View v) {
+//                        if (itemList != null && itemList.size() > 0) {
+//                            calculatorViewHolder.item.setType(TYPE_SUB);
+//                            CoinCalculator mCoinCalculator = new CoinCalculator();
+//                            mCoinCalculator.setType(CalculatorAdapter.TYPE_TOP);
+//                            itemList.add(mCoinCalculator);
+//                            notifyItemInserted(position + 1);
+//                        }
+//                    }
+//                });
+//
+//            } else {
+//                calculatorViewHolder.viewBinding.includedItemCalculatorResult.getRoot().setVisibility(View.VISIBLE);
+//                calculatorViewHolder.viewBinding.includedItemCalculatorResult.btnCancle.setOnClickListener(new OnSingleClickListener() {
+//                    @Override
+//                    public void onSingleClick(View v) {
+//                        if (itemList != null && itemList.size() > 1) {
+//                            CoinCalculator mCoinCalculator = new CoinCalculator();
+//                            if (qcRecyclerItemListener != null)
+//                                qcRecyclerItemListener.onDeleteItem(position, mCoinCalculator);
+//                            itemList.remove(position);
+//                            notifyItemRemoved(position);
+//                        }
+//                    }
+//                });
+//
+//            }
         }
     }
 

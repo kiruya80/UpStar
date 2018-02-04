@@ -17,4 +17,9 @@
 
     <string name="str_calculator">에이다 (ADA)</string>
 
+    <string name="str_sell">매수</string>
+    <string name="str_buy">매도</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
