@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.lib.core.listener.OnSingleClickListener;
+import com.ulling.lib.core.util.QcActivityUtils;
 import com.ulling.lib.core.util.QcLog;
 import com.ulling.lib.core.viewutil.adapter.QcRecyclerBaseAdapter;
 import com.ulling.upstar.R;
@@ -39,10 +40,10 @@ import java.util.ArrayList;
  * 메뉴
  * ㄴ 자산관리
  */
-public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHost.OnTabChangeListener {
+public class CoinCalculatorFragment extends QcBaseLifeFragment {
 
-    public static final String TAB_TYPE_BUY = "TAB_TYPE_BUY";
-    public static final String TAB_TYPE_SELL = "TAB_TYPE_02";
+    public static final int TAB_TYPE_BUY = 0;
+    public static final int TAB_TYPE_SELL = 1;
 
     private FragmentCoinCalculatorBinding viewBinding;
     private boolean isInfoView = false;
@@ -53,7 +54,8 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
     private ArrayList<CoinCalculator> coinCalculators;
     private BuyCoinFragment mBuyCoinFragment;
     private SellCoinFragment mSellCoinFragment;
-    private TabPagerAdapter mTabPagerAdapter;
+
+    private int tabType = TAB_TYPE_BUY;
 
 
     public CoinCalculatorFragment() {
@@ -129,143 +131,64 @@ public class CoinCalculatorFragment extends QcBaseLifeFragment implements TabHos
         viewBinding.recyclerViewCalculator.setLayoutManager(new LinearLayoutManager(qCon));
         viewBinding.recyclerViewCalculator.setNestedScrollingEnabled(false);
 
+        viewBinding.btnBuy.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (tabType != TAB_TYPE_BUY) {
+                    tabType = TAB_TYPE_BUY;
+                    mSellCoinFragment.hideSoftAll();
+                    setFragment();
+                }
+            }
+        });
+        viewBinding.btnSell.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (tabType != TAB_TYPE_SELL) {
+                    tabType = TAB_TYPE_SELL;
+                    mBuyCoinFragment.hideSoftAll();
+                    setFragment();
+                }
+            }
+        });
 
         mBuyCoinFragment = new BuyCoinFragment();
         mSellCoinFragment = new SellCoinFragment();
 
-
-
-        viewBinding.layTab.addTab(viewBinding.layTab.newTab().setText("Tab 1"));
-        viewBinding.layTab.addTab(viewBinding.layTab.newTab().setText("Tab 2"));
-        viewBinding.layTab.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        mTabPagerAdapter = new TabPagerAdapter     (getChildFragmentManager(), viewBinding.layTab.getTabCount());
-        viewBinding.pager.setAdapter(mTabPagerAdapter);
-        viewBinding.pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(viewBinding.layTab));
-
-        viewBinding.layTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-//                mTabPagerAdapter.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
-
-
-//        viewBinding.tabHost.setOnTabChangedListener(this);
-////        setupTabs();
-//
-//        // http://stex.tistory.com/35
-//        viewBinding.tabHost.setup(qCon, getChildFragmentManager(), R.id.content);
-//        TabHost.TabSpec tabSpec1 = viewBinding.tabHost.newTabSpec(TAB_TYPE_BUY);
-//        tabSpec1.setIndicator(getResources().getString(R.string.str_sell));
-//        tabSpec1.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_sell), R.drawable.bg_rounded_pink));
-//        viewBinding.tabHost.addTab(tabSpec1, BuyCoinFragment.class, null);
-//
-//        TabHost.TabSpec tabSpec2 = viewBinding.tabHost.newTabSpec(TAB_TYPE_SELL);
-//        tabSpec2.setIndicator(getResources().getString(R.string.str_buy));
-//        tabSpec2.setIndicator(getTabIndicator(viewBinding.tabHost.getContext(), getResources().getString(R.string.str_buy), R.drawable.bg_rounded_blue));
-//        viewBinding.tabHost.addTab(tabSpec2, SellCoinFragment.class, null);
-//
-//        setTabColor(TAB_TYPE_BUY);
-//
-//        viewBinding.tabHost.getTabWidget().setShowDividers(TabWidget.SHOW_DIVIDER_MIDDLE);
-//        viewBinding.tabHost.getTabWidget().setDividerDrawable(R.drawable.bg_tab_driver);
-//        viewBinding.tabHost.setCurrentTab(mCurrentTab);
+        tabType = TAB_TYPE_BUY;
+        setFragment();
     }
 
-    private void setupTabs() {
-        viewBinding.tabHost.setup(qCon, getChildFragmentManager(), android.R.id.tabcontent);// important!
-        viewBinding.tabHost.addTab(newTab(TAB_TYPE_BUY, R.string.str_sell, R.id.buyContent));
-        viewBinding.tabHost.addTab(newTab(TAB_TYPE_SELL, R.string.str_buy, R.id.sellContent));
+    private void setFragment() {
+        if (tabType == TAB_TYPE_BUY) {
+            QcActivityUtils.replaceFragment(getChildFragmentManager(),
+                    mBuyCoinFragment,
+                    R.id.content,
+                    BuyCoinFragment.class.getSimpleName());
+
+        } else if (tabType == TAB_TYPE_SELL) {
+            QcActivityUtils.replaceFragment(getChildFragmentManager(),
+                    mSellCoinFragment,
+                    R.id.content,
+                    SellCoinFragment.class.getSimpleName());
+        }
+        setTabButton();
     }
 
-    private TabHost.TabSpec newTab(String tag, int labelId, int tabContentId) {
-        View indicator = LayoutInflater.from(getActivity()).inflate(
-                R.layout.fragment_coin_calculator,
-                (ViewGroup) viewBinding.getRoot().findViewById(android.R.id.tabs), false);
-        ((TextView) indicator.findViewById(R.id.text)).setText(labelId);
+    private void setTabButton() {
+        if (tabType == TAB_TYPE_BUY) {
+            viewBinding.btnBuy.setTextColor(getResources().getColor(R.color.color_white));
+            viewBinding.btnBuy.setBackgroundResource(R.drawable.bg_rounded_pink);
+            viewBinding.btnSell.setTextColor(getResources().getColor(R.color.colorAccent));
+            viewBinding.btnSell.setBackgroundResource(R.drawable.bg_rounded_blue_stroke);
 
-        TabHost.TabSpec tabSpec = viewBinding.tabHost.newTabSpec(tag);
-        tabSpec.setIndicator(indicator);
-        tabSpec.setContent(tabContentId);
-        return tabSpec;
-    }
-
-
-    private void setTabColor(String tabId) {
-        for (int i = 0; i < viewBinding.tabHost.getTabWidget().getChildCount(); i++) {
-            TextView tv = (TextView) viewBinding.tabHost.getTabWidget().getChildAt(i).findViewById(R.id.textTitle); // 탭에 있는 TextView 지정후
-            View background = (View) viewBinding.tabHost.getTabWidget().getChildAt(i);
-            if (i == viewBinding.tabHost.getCurrentTab()) {
-                tv.setTextColor(getResources().getColor(R.color.color_white));
-                if (TAB_TYPE_BUY.equals(tabId)) {
-                    background.setBackgroundColor(getResources().getColor(R.color.color_pink_500));
-                    background.setBackgroundResource(R.drawable.bg_rounded_pink);
-                } else if (TAB_TYPE_SELL.equals(tabId)) {
-                    background.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    background.setBackgroundResource(R.drawable.bg_rounded_blue);
-                }
-            } else {
-                if (TAB_TYPE_BUY.equals(tabId)) {
-                    tv.setTextColor(getResources().getColor(R.color.colorAccent));
-                    background.setBackgroundResource(R.drawable.bg_rounded_blue_stroke);
-                } else if (TAB_TYPE_SELL.equals(tabId)) {
-                    tv.setTextColor(getResources().getColor(R.color.color_pink_500));
-                    background.setBackgroundResource(R.drawable.bg_rounded_pink_stroke);
-                }
-            }
+        } else if (tabType == TAB_TYPE_SELL) {
+            viewBinding.btnBuy.setTextColor(getResources().getColor(R.color.color_pink_500));
+            viewBinding.btnBuy.setBackgroundResource(R.drawable.bg_rounded_pink_stroke);
+            viewBinding.btnSell.setTextColor(getResources().getColor(R.color.color_white));
+            viewBinding.btnSell.setBackgroundResource(R.drawable.bg_rounded_blue);
         }
     }
-    private int mCurrentTab = 0;
-
-    @Override
-    public void onTabChanged(String tabId) {
-        QcLog.e("onTabChanged == " + tabId);
-        setTabColor(tabId);
-        if (TAB_TYPE_BUY.equals(tabId)) {
-            updateTab(tabId, R.id.buyContent);
-            mCurrentTab = 0;
-        } else if (TAB_TYPE_SELL.equals(tabId)) {
-            updateTab(tabId, R.id.sellContent);
-            mCurrentTab = 1;
-        }
-    }
-    private void updateTab(String tabId, int placeholder) {
-        FragmentManager fm = getFragmentManager();
-        QcBaseLifeFragment mQcBaseLifeFragment = null;
-        if (fm.findFragmentByTag(tabId) == null) {
-            if (TAB_TYPE_BUY.equals(tabId)) {
-                mQcBaseLifeFragment = SellCoinFragment.getInstance();
-            } else if (TAB_TYPE_SELL.equals(tabId)) {
-                mQcBaseLifeFragment = BuyCoinFragment.getInstance();
-            }
-            fm.beginTransaction()
-                    .replace(placeholder, mQcBaseLifeFragment, tabId)
-                    .commit();
-        }
-    }
-
-    private View getTabIndicator(Context context, String title, int resId) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tab, null);
-        LinearLayout layTab = (LinearLayout) view.findViewById(R.id.layTab);
-        layTab.setBackgroundResource(resId);
-        TextView textTitle = (TextView) view.findViewById(R.id.textTitle);
-        textTitle.setText(title);
-        return view;
-    }
-
 
     @Override
     protected void needUIEventListener() {

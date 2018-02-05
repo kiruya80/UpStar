@@ -34,7 +34,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:minHeight="?attr/actionBarSize"
+                    android:layout_height="@dimen/p130"
                     android:fontFamily="@font/nanumsquare_r"
                     android:gravity="center"
                     android:text="거래내역"
@@ -54,68 +54,52 @@
             </LinearLayout>
 
 
-
-
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/p30"
+                android:layout_weight="1"
                 android:orientation="vertical">
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/layTab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <android.support.v4.app.FragmentTabHost
-                android:id="@+id/tabHost"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="@dimen/p130"
+                    android:orientation="horizontal">
 
-                    <TabWidget
-                        android:id="@android:id/tabs"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/p130" />
-
-                    <FrameLayout
-                        android:id="@android:id/tabcontent"
-                        android:layout_width="match_parent"
-                        android:visibility="gone"
+                    <Button
+                        android:id="@+id/btnBuy"
+                        android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/p20">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_rounded_pink_stroke"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:gravity="center"
+                        android:text="매수"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/p60" />
 
-                        <FrameLayout
-                            android:id="@+id/buyContent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                        <FrameLayout
-                            android:id="@+id/sellContent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </FrameLayout>
+                    <Button
+                        android:id="@+id/btnSell"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/p20"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_rounded_blue_stroke"
+                        android:fontFamily="@font/nanumsquare_r"
+                        android:gravity="center"
+                        android:text="매도"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/p60" />
 
-                    <FrameLayout
-                        android:id="@+id/content"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/p20"
-                        android:layout_height="match_parent" />
                 </LinearLayout>
-            </android.support.v4.app.FragmentTabHost>
+
+                <FrameLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/p20" />
 
             </LinearLayout>
         </LinearLayout>

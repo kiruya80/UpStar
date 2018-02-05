@@ -1,5 +1,6 @@
 package com.ulling.lib.core.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -138,7 +139,7 @@ public class QcUtils {
 
     public static String getMacAddress(Context context) {
         WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = wifiMgr.getConnectionInfo();
+        @SuppressLint("MissingPermission") WifiInfo info = wifiMgr.getConnectionInfo();
         String mac = info.getMacAddress();
         return mac;
     }
@@ -162,7 +163,10 @@ public class QcUtils {
         return null;
     }
 
-    public static void downKeyboard(Context context, EditText editText) {
+    public static void hideSoftKeyboard(Context context, EditText editText) {
+        if (editText == null || context == null)
+            return;
+
         InputMethodManager mInputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         mInputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }

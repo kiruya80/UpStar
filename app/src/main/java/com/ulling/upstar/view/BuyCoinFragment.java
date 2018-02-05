@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import android.widget.EditText;
 
 import com.ulling.lib.core.base.QcBaseLifeFragment;
 import com.ulling.lib.core.listener.OnSingleClickListener;
+import com.ulling.lib.core.util.QcLog;
+import com.ulling.lib.core.util.QcTextUtils;
+import com.ulling.lib.core.util.QcUtils;
 import com.ulling.upstar.R;
 import com.ulling.upstar.databinding.FragmentBuyCoinBinding;
 
@@ -44,6 +49,7 @@ public class  BuyCoinFragment extends QcBaseLifeFragment {
 
     }
 
+
     @Override
     protected int needGetLayoutId() {
         return R.layout.fragment_buy_coin;
@@ -55,11 +61,17 @@ public class  BuyCoinFragment extends QcBaseLifeFragment {
         viewBinding.btnOk.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View v) {
-                hideSoft(viewBinding.editAverage);
-                hideSoft(viewBinding.editAmount);
-                hideSoft(viewBinding.editPrice);
+                hideSoftAll();
+                QcLog.e("editAverage == " + viewBinding.editAverage.getText().toString());
+                QcLog.e("editAmount == " + viewBinding.editAmount.getText().toString());
+                QcLog.e("editPrice == " + viewBinding.editPrice.getText().toString());
             }
         });
+
+        viewBinding.editAverage.addTextChangedListener(new QcTextUtils.NumberTextWatcher(viewBinding.editAverage));
+        viewBinding.editAmount.addTextChangedListener(new QcTextUtils.NumberTextWatcher(viewBinding.editAmount));
+        viewBinding.editPrice.addTextChangedListener(new QcTextUtils.NumberTextWatcher(viewBinding.editPrice));
+
     }
 
     @Override
@@ -72,13 +84,19 @@ public class  BuyCoinFragment extends QcBaseLifeFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+//        viewBinding.editAverage.setText("");
+//        viewBinding.editAmount.setText("");
+//        viewBinding.editPrice.setText("");
+        hideSoftAll();
+    }
+
     public void hideSoftAll( ) {
-        hideSoft(viewBinding.editAverage);
-        hideSoft(viewBinding.editAmount);
-        hideSoft(viewBinding.editPrice);
+        QcUtils.hideSoftKeyboard(qCon, viewBinding.editAverage);
+        QcUtils.hideSoftKeyboard(qCon, viewBinding.editAmount);
+        QcUtils.hideSoftKeyboard(qCon, viewBinding.editPrice);
     }
-    private void hideSoft(EditText editText) {
-        InputMethodManager imm = (InputMethodManager) qCon.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
+
 }
